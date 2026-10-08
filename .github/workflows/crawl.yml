@@ -1,0 +1,65 @@
+name: Daily crawl and deploy
+
+on:
+  schedule:
+    - cron: "15 5 * * *"   # every day at 05:15 UTC
+  workflow_dispatch:        # "Run workflow" button
+  push:
+    branches: [main]
+    paths-ignore: ["events.json", "crawler/cache/**"]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: crawl-and-deploy
+  cancel-in-progress: false
+
+jobs:
+  crawl:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run crawler
+        run: python3 crawler/crawl.py
+      - name: Commit refreshed data
+        run: |
+          git config user.name "world-countdowns-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add events.json crawler/cache
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Daily crawl $(date -u +%F)"
+            git push
+          fi
+
+  deploy:
+    needs: crawl
+    if: always() && (needs.crawl.result == 'success' || needs.crawl.result == 'skipped')
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp index.html events.json _site/
+          touch _site/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

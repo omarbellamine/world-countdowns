@@ -1,0 +1,1022 @@
+{
+ "events": [
+  {
+   "cat": "sports",
+   "ic": "flag",
+   "name": "F1 Abu Dhabi Grand Prix",
+   "desc": "Final round of the 2026 championship, under the lights at Yas Marina.",
+   "t": "2026-12-06T13:00:00Z",
+   "end": "2026-12-06T15:00:00Z",
+   "where": "Yas Marina Circuit, Abu Dhabi, UAE",
+   "link": "https://www.formula1.com",
+   "about": "The season closes with a twilight race that starts in daylight and finishes under floodlights. 2026 is the first year of Formula 1's new engine and chassis rules, so this finale wraps up a reset season.",
+   "facts": [
+    [
+     "Round",
+     "Season finale"
+    ],
+    [
+     "Circuit length",
+     "5.281 km"
+    ],
+    [
+     "Race laps",
+     "58"
+    ],
+    [
+     "Start time",
+     "17:00 local (13:00 UTC)"
+    ]
+   ],
+   "id": "f1-abu-dhabi-grand-prix",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "racket",
+   "name": "Australian Open",
+   "desc": "First tennis Grand Slam of the year at Melbourne Park.",
+   "t": "2027-01-17T00:00:00Z",
+   "end": "2027-01-31T12:00:00Z",
+   "where": "Melbourne Park, Melbourne, Australia",
+   "link": "https://ausopen.com",
+   "about": "The first Grand Slam of the season, played on hard courts in the Australian summer. Opening Week runs from 11 to 16 January, and main-draw play starts on Sunday 17 January.",
+   "facts": [
+    [
+     "Surface",
+     "Hard court"
+    ],
+    [
+     "Opening Week",
+     "11–16 Jan 2027"
+    ],
+    [
+     "Main draw",
+     "17–31 Jan 2027"
+    ],
+    [
+     "Finals",
+     "30 & 31 Jan 2027"
+    ]
+   ],
+   "id": "australian-open",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "oval",
+   "name": "Super Bowl LXI",
+   "desc": "NFL championship game at SoFi Stadium, Inglewood.",
+   "t": "2027-02-14T23:30:00Z",
+   "end": "2027-02-15T03:30:00Z",
+   "where": "SoFi Stadium, Inglewood, California",
+   "link": "https://www.nfl.com/super-bowl",
+   "about": "The 61st Super Bowl decides the 2026 NFL season. SoFi Stadium hosts for the second time, after Super Bowl LVI in 2022. The kick-off time shown is the usual early-evening Eastern slot.",
+   "facts": [
+    [
+     "Edition",
+     "61st Super Bowl"
+    ],
+    [
+     "Season",
+     "2026 NFL"
+    ],
+    [
+     "Previous at SoFi",
+     "Super Bowl LVI (2022)"
+    ],
+    [
+     "Kick-off",
+     "Approx. 6:30 pm ET"
+    ]
+   ],
+   "id": "super-bowl-lxi",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "flag",
+   "name": "F1 2027 season opener",
+   "desc": "The new season starts with a sprint weekend in Bahrain.",
+   "t": "2027-03-14T15:00:00Z",
+   "end": "2027-03-14T17:00:00Z",
+   "where": "Bahrain International Circuit, Sakhir",
+   "link": "https://www.formula1.com",
+   "about": "The 24-race 2027 calendar opens in Bahrain. For the first time a season begins with a sprint weekend, so the year's first points are scored in a short-format race before the Grand Prix.",
+   "facts": [
+    [
+     "Round",
+     "1 of 24"
+    ],
+    [
+     "Format",
+     "Sprint weekend"
+    ],
+    [
+     "Calendar",
+     "24 races, 10 sprints"
+    ],
+    [
+     "Next race",
+     "Saudi Arabia, 21 Mar"
+    ]
+   ],
+   "id": "f1-2027-season-opener",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "golf",
+   "name": "The Masters",
+   "desc": "First golf major of the year, played for the green jacket at Augusta.",
+   "t": "2027-04-08T12:00:00Z",
+   "end": "2027-04-11T23:59:00Z",
+   "where": "Augusta National Golf Club, Augusta, Georgia",
+   "link": "https://www.masters.com",
+   "about": "The only major played at the same course every year. Four rounds from Thursday to Sunday, with the green jacket presented to the winner in Butler Cabin.",
+   "facts": [
+    [
+     "Major",
+     "1st of 4 in 2027"
+    ],
+    [
+     "Rounds",
+     "4 (Thu–Sun)"
+    ],
+    [
+     "Par",
+     "72"
+    ],
+    [
+     "Prize",
+     "Green jacket"
+    ]
+   ],
+   "id": "the-masters",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "ball",
+   "name": "FIFA Women's World Cup",
+   "desc": "First Women's World Cup in South America, hosted by Brazil.",
+   "t": "2027-06-24T00:00:00",
+   "end": "2027-07-25T23:59:00",
+   "where": "Brazil, final at the Maracanã, Rio de Janeiro",
+   "link": "https://www.fifa.com",
+   "about": "Brazil hosts the tenth Women's World Cup, the first in South America. 32 teams play across host cities nationwide, and the final is at the Maracanã.",
+   "facts": [
+    [
+     "Edition",
+     "10th"
+    ],
+    [
+     "Teams",
+     "32"
+    ],
+    [
+     "Dates",
+     "24 Jun – 25 Jul 2027"
+    ],
+    [
+     "Final",
+     "Maracanã, Rio de Janeiro"
+    ]
+   ],
+   "id": "fifa-women-s-world-cup",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "racket",
+   "name": "Wimbledon",
+   "desc": "The grass-court Grand Slam at the All England Club.",
+   "t": "2027-06-28T10:00:00Z",
+   "end": "2027-07-11T18:00:00Z",
+   "tbc": true,
+   "where": "All England Lawn Tennis Club, London",
+   "link": "https://www.wimbledon.com",
+   "about": "The oldest tennis tournament in the world and the only Grand Slam on grass. Dates here follow the usual late-June start and are provisional until the club confirms them.",
+   "facts": [
+    [
+     "Surface",
+     "Grass"
+    ],
+    [
+     "Duration",
+     "Two weeks"
+    ],
+    [
+     "Dress code",
+     "All white"
+    ],
+    [
+     "Status",
+     "Dates TBC"
+    ]
+   ],
+   "id": "wimbledon",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "golf",
+   "name": "Ryder Cup",
+   "desc": "Europe vs USA at Adare Manor, Ireland, in the event's 100th year.",
+   "t": "2027-09-17T07:00:00Z",
+   "end": "2027-09-19T19:00:00Z",
+   "where": "Adare Manor, County Limerick, Ireland",
+   "link": "https://www.rydercup.com",
+   "about": "Europe and the United States meet over three days of foursomes, fourballs and singles. 2027 marks 100 years since the first Ryder Cup, and the event returns to Ireland for the first time since 2006.",
+   "facts": [
+    [
+     "Teams",
+     "Europe v USA"
+    ],
+    [
+     "Build-up days",
+     "13–16 Sep 2027"
+    ],
+    [
+     "Matches",
+     "17–19 Sep 2027"
+    ],
+    [
+     "Last in Ireland",
+     "2006, The K Club"
+    ]
+   ],
+   "id": "ryder-cup",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "oval",
+   "name": "Rugby World Cup",
+   "desc": "Australia hosts the first 24-team Rugby World Cup.",
+   "t": "2027-10-01T00:00:00",
+   "end": "2027-11-13T23:59:00",
+   "where": "Australia (nationwide)",
+   "link": "https://www.rugbyworldcup.com",
+   "about": "The men's Rugby World Cup expands from 20 to 24 teams and adds a round of 16. Australia hosts for the first time since 2003.",
+   "facts": [
+    [
+     "Teams",
+     "24"
+    ],
+    [
+     "New stage",
+     "Round of 16"
+    ],
+    [
+     "Dates",
+     "1 Oct – 13 Nov 2027"
+    ],
+    [
+     "Last hosted",
+     "Australia, 2003"
+    ]
+   ],
+   "id": "rugby-world-cup",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "bat",
+   "name": "ICC Cricket World Cup",
+   "desc": "14-team ODI World Cup in South Africa, Zimbabwe and Namibia.",
+   "t": "2027-10-04T00:00:00",
+   "end": "2027-11-21T23:59:00",
+   "tbc": true,
+   "where": "South Africa, Zimbabwe & Namibia",
+   "link": "https://www.icc-cricket.com",
+   "about": "The men's 50-over World Cup returns to southern Africa for the first time since 2003, with the field growing to 14 teams. The start date is provisional; the final is set for 21 November.",
+   "facts": [
+    [
+     "Format",
+     "ODI, 50 overs"
+    ],
+    [
+     "Teams",
+     "14"
+    ],
+    [
+     "Final",
+     "21 Nov 2027"
+    ],
+    [
+     "Status",
+     "Start date TBC"
+    ]
+   ],
+   "id": "icc-cricket-world-cup",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "ball",
+   "name": "UEFA Euro 2028",
+   "desc": "24 nations across the UK and Ireland.",
+   "t": "2028-06-09T00:00:00",
+   "end": "2028-07-09T23:59:00",
+   "where": "England, Scotland, Wales & Republic of Ireland",
+   "link": "https://www.uefa.com",
+   "about": "The European Championship is co-hosted by five associations across the UK and Ireland, with the final at Wembley.",
+   "facts": [
+    [
+     "Teams",
+     "24"
+    ],
+    [
+     "Matches",
+     "51"
+    ],
+    [
+     "Dates",
+     "9 Jun – 9 Jul 2028"
+    ],
+    [
+     "Final",
+     "Wembley Stadium, London"
+    ]
+   ],
+   "id": "uefa-euro-2028",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "torch",
+   "name": "LA 2028 Olympics",
+   "desc": "Opening ceremony of the Summer Games in Los Angeles.",
+   "t": "2028-07-15T02:00:00Z",
+   "end": "2028-07-31T06:00:00Z",
+   "where": "Los Angeles, California",
+   "link": "https://la28.org",
+   "about": "Los Angeles hosts the Summer Olympics for the third time, after 1932 and 1984. New and returning sports include flag football, cricket, lacrosse, squash, and baseball/softball.",
+   "facts": [
+    [
+     "Dates",
+     "14–30 Jul 2028"
+    ],
+    [
+     "LA host years",
+     "1932, 1984, 2028"
+    ],
+    [
+     "New sports",
+     "Flag football, cricket, lacrosse, squash"
+    ],
+    [
+     "Paralympics",
+     "From 15 Aug 2028"
+    ]
+   ],
+   "id": "la-2028-olympics",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "snow",
+   "name": "Winter Olympics 2030",
+   "desc": "Winter Games spread across the French Alps and Nice.",
+   "t": "2030-02-01T00:00:00",
+   "end": "2030-02-17T23:59:00",
+   "tbc": true,
+   "where": "French Alps & Nice, France",
+   "link": "https://olympics.com",
+   "about": "France's fourth Winter Games are spread across mountain clusters in Haute-Savoie, Savoie and Briançon, with ice sports on the coast in Nice.",
+   "facts": [
+    [
+     "Host",
+     "French Alps"
+    ],
+    [
+     "Ice sports",
+     "Nice"
+    ],
+    [
+     "Previous in France",
+     "Albertville 1992"
+    ],
+    [
+     "Status",
+     "Dates TBC"
+    ]
+   ],
+   "id": "winter-olympics-2030",
+   "src": "curated"
+  },
+  {
+   "cat": "sports",
+   "ic": "trophy",
+   "name": "FIFA World Cup 2030",
+   "desc": "Centenary World Cup across Spain, Portugal and Morocco, with opening games in South America.",
+   "t": "2030-06-08T00:00:00",
+   "end": "2030-07-21T23:59:00",
+   "tbc": true,
+   "where": "Spain, Portugal & Morocco + Uruguay, Argentina, Paraguay",
+   "link": "https://www.fifa.com",
+   "about": "The World Cup marks 100 years since the first tournament in Uruguay. Three celebration matches open the event in South America before the tournament moves to Spain, Portugal and Morocco.",
+   "facts": [
+    [
+     "Teams",
+     "48"
+    ],
+    [
+     "Centenary of",
+     "Uruguay 1930"
+    ],
+    [
+     "Continents",
+     "3"
+    ],
+    [
+     "Status",
+     "Dates TBC"
+    ]
+   ],
+   "id": "fifa-world-cup-2030",
+   "src": "curated"
+  },
+  {
+   "cat": "games",
+   "ic": "pad",
+   "name": "Call of Duty: Modern Warfare 4",
+   "desc": "The next Modern Warfare campaign and multiplayer.",
+   "t": "2026-10-23T00:00:00",
+   "where": "PS5 · Xbox Series X|S · PC",
+   "link": "https://www.callofduty.com",
+   "about": "The next entry in the Modern Warfare sub-series, with a new campaign, multiplayer and a fresh season of live content after launch.",
+   "facts": [
+    [
+     "Developer",
+     "Infinity Ward"
+    ],
+    [
+     "Publisher",
+     "Activision"
+    ],
+    [
+     "Platforms",
+     "PS5, Xbox Series X|S, PC"
+    ],
+    [
+     "Release",
+     "23 Oct 2026"
+    ]
+   ],
+   "id": "call-of-duty-modern-warfare-4",
+   "src": "curated"
+  },
+  {
+   "cat": "games",
+   "ic": "pad",
+   "name": "Phantom Blade Zero",
+   "desc": "Kung-fu action RPG from S-Game on PS5 and PC.",
+   "t": "2026-10-29T00:00:00",
+   "where": "PS5 · PC",
+   "link": "https://www.phantomblade.com",
+   "about": "A fast, combo-heavy action RPG set in a dark wuxia world, built around martial-arts animation and boss fights.",
+   "facts": [
+    [
+     "Developer",
+     "S-Game"
+    ],
+    [
+     "Genre",
+     "Action RPG"
+    ],
+    [
+     "Platforms",
+     "PS5, PC"
+    ],
+    [
+     "Release",
+     "29 Oct 2026"
+    ]
+   ],
+   "id": "phantom-blade-zero",
+   "src": "curated"
+  },
+  {
+   "cat": "games",
+   "ic": "pad",
+   "name": "Grand Theft Auto VI",
+   "desc": "Rockstar's return to Vice City on PS5 and Xbox Series X|S.",
+   "t": "2026-11-19T00:00:00",
+   "where": "PS5 · Xbox Series X|S",
+   "link": "https://www.rockstargames.com/VI",
+   "about": "Rockstar's first new GTA in more than a decade, set in the state of Leonida and its Vice City. The release moved twice before landing on 19 November 2026.",
+   "facts": [
+    [
+     "Developer",
+     "Rockstar Games"
+    ],
+    [
+     "Setting",
+     "Leonida / Vice City"
+    ],
+    [
+     "Leads",
+     "Lucia & Jason"
+    ],
+    [
+     "Platforms",
+     "PS5, Xbox Series X|S"
+    ]
+   ],
+   "id": "grand-theft-auto-vi",
+   "src": "curated"
+  },
+  {
+   "cat": "movies",
+   "ic": "film",
+   "name": "The Hunger Games: Sunrise on the Reaping",
+   "desc": "Prequel following a young Haymitch Abernathy.",
+   "t": "2026-11-20T00:00:00",
+   "where": "In cinemas",
+   "link": "https://www.lionsgate.com",
+   "about": "Adapted from Suzanne Collins's 2025 novel, the film follows Haymitch Abernathy's Games, 24 years before Katniss.",
+   "facts": [
+    [
+     "Director",
+     "Francis Lawrence"
+    ],
+    [
+     "Based on",
+     "Suzanne Collins (2025)"
+    ],
+    [
+     "Studio",
+     "Lionsgate"
+    ],
+    [
+     "Release",
+     "20 Nov 2026"
+    ]
+   ],
+   "id": "the-hunger-games-sunrise-on-the-reaping",
+   "src": "curated"
+  },
+  {
+   "cat": "movies",
+   "ic": "film",
+   "name": "Narnia: The Magician's Nephew",
+   "desc": "Greta Gerwig's Narnia, in IMAX before Netflix on 25 Dec.",
+   "t": "2026-11-26T00:00:00",
+   "where": "IMAX cinemas, then Netflix",
+   "link": "https://www.netflix.com",
+   "about": "Greta Gerwig writes and directs Netflix's first Narnia film. It plays exclusively in IMAX over Thanksgiving before streaming on Christmas Day.",
+   "facts": [
+    [
+     "Director",
+     "Greta Gerwig"
+    ],
+    [
+     "IMAX release",
+     "26 Nov 2026"
+    ],
+    [
+     "On Netflix",
+     "25 Dec 2026"
+    ],
+    [
+     "Based on",
+     "C.S. Lewis"
+    ]
+   ],
+   "id": "narnia-the-magician-s-nephew",
+   "src": "curated"
+  },
+  {
+   "cat": "movies",
+   "ic": "film",
+   "name": "Jumanji 3",
+   "desc": "The jungle game comes back for a third round.",
+   "t": "2026-12-11T00:00:00",
+   "where": "In cinemas",
+   "link": "https://www.sonypictures.com",
+   "about": "The third film in the rebooted series brings back the core video-game cast for another trip into Jumanji.",
+   "facts": [
+    [
+     "Director",
+     "Jake Kasdan"
+    ],
+    [
+     "Cast",
+     "Dwayne Johnson, Kevin Hart, Jack Black, Karen Gillan"
+    ],
+    [
+     "Studio",
+     "Sony Pictures"
+    ],
+    [
+     "Release",
+     "11 Dec 2026"
+    ]
+   ],
+   "id": "jumanji-3",
+   "src": "curated"
+  },
+  {
+   "cat": "movies",
+   "ic": "film",
+   "name": "Avengers: Doomsday",
+   "desc": "Robert Downey Jr. returns as Doctor Doom.",
+   "t": "2026-12-18T00:00:00",
+   "where": "In cinemas",
+   "link": "https://www.marvel.com",
+   "about": "The Russo brothers return to the Avengers, with Robert Downey Jr. as Victor von Doom. It opens on the same day as Dune: Part Three.",
+   "facts": [
+    [
+     "Directors",
+     "Anthony & Joe Russo"
+    ],
+    [
+     "Studio",
+     "Marvel Studios"
+    ],
+    [
+     "Villain",
+     "Doctor Doom"
+    ],
+    [
+     "Same day as",
+     "Dune: Part Three"
+    ]
+   ],
+   "id": "avengers-doomsday",
+   "src": "curated"
+  },
+  {
+   "cat": "movies",
+   "ic": "film",
+   "name": "Dune: Part Three",
+   "desc": "Villeneuve adapts Dune Messiah. Same day as Doomsday.",
+   "t": "2026-12-18T00:00:00",
+   "where": "In cinemas",
+   "link": "https://www.warnerbros.com",
+   "about": "Denis Villeneuve's third Dune film adapts Frank Herbert's Dune Messiah, picking up Paul Atreides's story years after he takes power.",
+   "facts": [
+    [
+     "Director",
+     "Denis Villeneuve"
+    ],
+    [
+     "Based on",
+     "Dune Messiah (1969)"
+    ],
+    [
+     "Studio",
+     "Legendary / Warner Bros."
+    ],
+    [
+     "Same day as",
+     "Avengers: Doomsday"
+    ]
+   ],
+   "id": "dune-part-three",
+   "src": "curated"
+  },
+  {
+   "cat": "movies",
+   "ic": "film",
+   "name": "Star Wars: Starfighter",
+   "desc": "A new standalone Star Wars story starring Ryan Gosling.",
+   "t": "2027-05-28T00:00:00",
+   "where": "In cinemas",
+   "link": "https://www.starwars.com",
+   "about": "A standalone adventure set after the Skywalker saga, with Ryan Gosling leading a new cast.",
+   "facts": [
+    [
+     "Director",
+     "Shawn Levy"
+    ],
+    [
+     "Star",
+     "Ryan Gosling"
+    ],
+    [
+     "Studio",
+     "Lucasfilm"
+    ],
+    [
+     "Release",
+     "28 May 2027"
+    ]
+   ],
+   "id": "star-wars-starfighter",
+   "src": "curated"
+  },
+  {
+   "cat": "movies",
+   "ic": "film",
+   "name": "Shrek 5",
+   "desc": "The first new Shrek film since 2010.",
+   "t": "2027-06-30T00:00:00",
+   "where": "In cinemas",
+   "link": "https://www.dreamworks.com",
+   "about": "The original voice cast returns for the first main Shrek film since Shrek Forever After, with Zendaya joining as Shrek's daughter.",
+   "facts": [
+    [
+     "Studio",
+     "DreamWorks Animation"
+    ],
+    [
+     "Voices",
+     "Mike Myers, Eddie Murphy, Cameron Diaz"
+    ],
+    [
+     "New cast",
+     "Zendaya"
+    ],
+    [
+     "Release",
+     "30 Jun 2027"
+    ]
+   ],
+   "id": "shrek-5",
+   "src": "curated"
+  },
+  {
+   "cat": "movies",
+   "ic": "film",
+   "name": "The Batman Part II",
+   "desc": "Robert Pattinson returns to Gotham.",
+   "t": "2027-10-01T00:00:00",
+   "where": "In cinemas",
+   "link": "https://www.dc.com",
+   "about": "Matt Reeves continues his crime-noir take on Batman, following the 2022 film.",
+   "facts": [
+    [
+     "Director",
+     "Matt Reeves"
+    ],
+    [
+     "Star",
+     "Robert Pattinson"
+    ],
+    [
+     "Studio",
+     "DC Studios / Warner Bros."
+    ],
+    [
+     "Release",
+     "1 Oct 2027"
+    ]
+   ],
+   "id": "the-batman-part-ii",
+   "src": "curated"
+  },
+  {
+   "cat": "movies",
+   "ic": "film",
+   "name": "Avengers: Secret Wars",
+   "desc": "The finale of Marvel's Multiverse Saga.",
+   "t": "2027-12-17T00:00:00",
+   "where": "In cinemas",
+   "link": "https://www.marvel.com",
+   "about": "The closing chapter of the Multiverse Saga, arriving a year after Avengers: Doomsday.",
+   "facts": [
+    [
+     "Directors",
+     "Anthony & Joe Russo"
+    ],
+    [
+     "Studio",
+     "Marvel Studios"
+    ],
+    [
+     "Saga",
+     "Multiverse Saga finale"
+    ],
+    [
+     "Release",
+     "17 Dec 2027"
+    ]
+   ],
+   "id": "avengers-secret-wars",
+   "src": "curated"
+  },
+  {
+   "cat": "movies",
+   "ic": "film",
+   "name": "The Lord of the Rings: The Hunt for Gollum",
+   "desc": "Andy Serkis directs and returns as Gollum.",
+   "t": "2027-12-17T00:00:00",
+   "where": "In cinemas",
+   "link": "https://www.warnerbros.com",
+   "about": "A new Middle-earth film following the search for Gollum before the events of The Fellowship of the Ring.",
+   "facts": [
+    [
+     "Director",
+     "Andy Serkis"
+    ],
+    [
+     "Producer",
+     "Peter Jackson"
+    ],
+    [
+     "Studio",
+     "Warner Bros."
+    ],
+    [
+     "Release",
+     "17 Dec 2027"
+    ]
+   ],
+   "id": "the-lord-of-the-rings-the-hunt-for-gollum",
+   "src": "curated"
+  },
+  {
+   "cat": "world",
+   "ic": "moon",
+   "name": "Halloween",
+   "desc": "Costumes, pumpkins and trick-or-treat.",
+   "t": "2026-10-31T00:00:00",
+   "end": "2026-10-31T23:59:59",
+   "where": "Worldwide",
+   "about": "Celebrated on 31 October, the eve of All Hallows' Day.",
+   "facts": [
+    [
+     "Date",
+     "Saturday 31 Oct 2026"
+    ],
+    [
+     "Origin",
+     "Celtic festival of Samhain"
+    ]
+   ],
+   "id": "halloween",
+   "src": "curated"
+  },
+  {
+   "cat": "world",
+   "ic": "ballot",
+   "name": "US midterm elections",
+   "desc": "Every House seat and about a third of the Senate on the ballot.",
+   "t": "2026-11-03T11:00:00Z",
+   "end": "2026-11-04T06:00:00Z",
+   "where": "United States",
+   "link": "https://www.usa.gov/midterm-elections",
+   "about": "Halfway through the presidential term, voters elect the whole House of Representatives, about a third of the Senate, and most state governors. The countdown is to the first polls opening on the East Coast.",
+   "facts": [
+    [
+     "Election day",
+     "Tuesday 3 Nov 2026"
+    ],
+    [
+     "House seats",
+     "All 435"
+    ],
+    [
+     "Senate seats",
+     "33 regular + specials"
+    ],
+    [
+     "Governors",
+     "36 races"
+    ]
+   ],
+   "id": "us-midterm-elections",
+   "src": "curated"
+  },
+  {
+   "cat": "world",
+   "ic": "gift",
+   "name": "Christmas Day",
+   "desc": "25 December.",
+   "t": "2026-12-25T00:00:00",
+   "end": "2026-12-25T23:59:59",
+   "where": "Worldwide",
+   "about": "Christmas Day falls on a Friday in 2026, giving many people a long weekend.",
+   "facts": [
+    [
+     "Date",
+     "Friday 25 Dec 2026"
+    ]
+   ],
+   "id": "christmas-day",
+   "src": "curated"
+  },
+  {
+   "cat": "world",
+   "ic": "spark",
+   "name": "New Year 2027",
+   "desc": "Midnight in your time zone.",
+   "t": "2027-01-01T00:00:00",
+   "end": "2027-01-01T00:15:00",
+   "where": "Your time zone",
+   "about": "The countdown runs to midnight where you are. Kiribati's Line Islands see 2027 first, about 26 hours before the last inhabited places in American Samoa.",
+   "facts": [
+    [
+     "First to celebrate",
+     "Kiribati (UTC+14)"
+    ],
+    [
+     "Last inhabited",
+     "American Samoa (UTC−11)"
+    ],
+    [
+     "Day",
+     "Friday 1 Jan 2027"
+    ]
+   ],
+   "id": "new-year-2027",
+   "src": "curated"
+  },
+  {
+   "cat": "world",
+   "ic": "eclipse",
+   "name": "Total solar eclipse",
+   "desc": "Over 6 minutes of totality across Spain, North Africa and Egypt.",
+   "t": "2027-08-02T10:07:00Z",
+   "end": "2027-08-02T11:00:00Z",
+   "where": "Spain, Gibraltar, North Africa, Egypt, Saudi Arabia, Yemen",
+   "link": "https://eclipse.gsfc.nasa.gov",
+   "about": "The longest total solar eclipse over land this century. The Moon's shadow crosses southern Spain and North Africa, with the longest totality near Luxor, Egypt. The countdown is to greatest eclipse.",
+   "facts": [
+    [
+     "Max totality",
+     "6 min 23 s"
+    ],
+    [
+     "Best spot",
+     "Near Luxor, Egypt"
+    ],
+    [
+     "Greatest eclipse",
+     "10:07 UTC"
+    ],
+    [
+     "Path",
+     "Spain → North Africa → Arabia"
+    ]
+   ],
+   "id": "total-solar-eclipse",
+   "src": "curated"
+  }
+ ],
+ "tba": [
+  {
+   "cat": "games",
+   "ic": "pad",
+   "name": "Fable",
+   "when": "2027"
+  },
+  {
+   "cat": "games",
+   "ic": "pad",
+   "name": "Kingdom Hearts IV",
+   "when": "2027"
+  },
+  {
+   "cat": "games",
+   "ic": "pad",
+   "name": "Resident Evil (next)",
+   "when": "2027"
+  },
+  {
+   "cat": "games",
+   "ic": "pad",
+   "name": "The Witcher 4",
+   "when": "2027+"
+  },
+  {
+   "cat": "games",
+   "ic": "pad",
+   "name": "The Elder Scrolls VI",
+   "when": "TBA"
+  },
+  {
+   "cat": "games",
+   "ic": "pad",
+   "name": "Intergalactic: The Heretic Prophet",
+   "when": "TBA"
+  },
+  {
+   "cat": "sports",
+   "ic": "trophy",
+   "name": "UEFA Champions League Final",
+   "when": "Jun 2027"
+  },
+  {
+   "cat": "sports",
+   "ic": "flag",
+   "name": "Tour de France, Edinburgh start",
+   "when": "Jul 2027"
+  },
+  {
+   "cat": "sports",
+   "ic": "bat",
+   "name": "The Ashes",
+   "when": "2027"
+  },
+  {
+   "cat": "world",
+   "ic": "globe",
+   "name": "Expo 2030 Riyadh",
+   "when": "Oct 2030"
+  }
+ ]
+}

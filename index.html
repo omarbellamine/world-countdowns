@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Live countdowns to the biggest upcoming sports events, game launches, film releases, holidays and sky events. Updated daily.">
+<title>World Countdowns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap">
+<style>
+/* Layout: early-2000s Flash "stage". Gray ground, one centered framed stage, Verdana text, pixel labels, 1px rules, block preloader bars. Color only as small highlights. Single light look by design. */
+:root {
+  --ground: #d6d6d6;
+  --stage: #f4f4f4;
+  --white: #ffffff;
+  --rule: #c4c4c4;
+  --rule-2: #e2e2e2;
+  --ink: #333333;
+  --mid: #777777;
+  --soft: #a3a3a3;
+  --orange: #ff5a00;
+  --live: #2fb52f;
+  --sports: #0099ff;
+  --games: #8cc400;
+  --movies: #ff3366;
+  --world: #ffbb00;
+  --mine: #9966ff;
+  --holidays: #00b39f;
+  --space: #5b5bd6;
+  --text: Verdana, Geneva, Tahoma, "DejaVu Sans", sans-serif;
+  --pixel: "Silkscreen", "Courier New", monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { background: var(--ground); }
+body { background: var(--ground); color: var(--ink); font: 12px/1.6 var(--text); padding: 24px 16px 40px; }
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 1px dotted var(--orange); outline-offset: 2px; }
+::selection { background: var(--orange); color: #fff; }
+svg.ic { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: square; stroke-linejoin: miter; flex: none; }
+.px { font-family: var(--pixel); font-weight: 400; letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* Stage */
+.stage { max-width: 960px; margin: 0 auto; background: var(--stage); border: 1px solid var(--rule); box-shadow: 0 0 0 4px var(--white); }
+.preload { height: 2px; background: var(--rule-2); overflow: hidden; }
+.preload i { display: block; height: 100%; width: 100%; background: var(--orange); animation: load 0.9s steps(12) both; }
+@keyframes load { from { width: 0; } }
+@media (prefers-reduced-motion: reduce) { .preload i { animation: none; } }
+
+header.top { display: flex; justify-content: space-between; align-items: end; gap: 12px; padding: 22px 28px 14px; flex-wrap: wrap; }
+.logo { display: inline-flex; align-items: baseline; gap: 8px; }
+.logo b { font: 700 18px/1 var(--pixel); letter-spacing: 0.02em; }
+.logo b span { color: var(--orange); }
+.logo small { color: var(--soft); font: 400 9px var(--pixel); text-transform: uppercase; }
+.clock { text-align: right; font: 400 9px/1.4 var(--pixel); color: var(--soft); text-transform: uppercase; }
+.clock b { display: block; font: 400 14px var(--pixel); color: var(--ink); font-variant-numeric: tabular-nums; }
+
+nav.menu { display: flex; align-items: center; justify-content: space-between; gap: 10px 20px; flex-wrap: wrap; padding: 8px 28px; border-block: 1px solid var(--rule); background: var(--white); }
+.menu ul { display: flex; flex-wrap: wrap; list-style: none; margin: 0; padding: 0; gap: 2px 0; }
+.menu li + li::before { content: "|"; color: var(--rule); margin: 0 9px; }
+.menu button { background: none; border: 0; padding: 0; cursor: pointer; font: 400 10px var(--pixel); text-transform: uppercase; color: var(--mid); display: inline-flex; align-items: center; gap: 5px; }
+.menu button::before { content: ""; width: 6px; height: 6px; background: var(--c, var(--soft)); opacity: 0.35; }
+.menu button:hover { color: var(--ink); }
+.menu button:hover::before { opacity: 1; }
+.menu button[aria-pressed="true"] { color: var(--ink); }
+.menu button[aria-pressed="true"]::before { opacity: 1; }
+.menu button sup { color: var(--orange); font-size: 9px; }
+.search { display: flex; align-items: center; border: 1px solid var(--rule); background: var(--stage); height: 22px; }
+.search span { font: 400 9px var(--pixel); color: var(--soft); padding: 0 6px; text-transform: uppercase; }
+.search input { border: 0; background: transparent; width: 150px; height: 100%; padding: 0 6px 0 0; font-size: 11px; outline: none; }
+.search:focus-within { border-color: var(--orange); }
+
+main { padding: 26px 28px 30px; display: grid; gap: 30px; }
+main[hidden] { display: none; }
+
+/* Section labels */
+.lbl { display: flex; align-items: center; gap: 10px; font: 400 10px var(--pixel); text-transform: uppercase; color: var(--mid); margin: 0 0 8px; }
+.lbl::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+.lbl em { font-style: normal; color: var(--orange); }
+
+/* Block preloader bar */
+.blocks { display: flex; gap: 2px; height: 6px; min-width: 0; }
+.blocks i { flex: 1; background: var(--rule-2); }
+.blocks i.on { background: var(--c, var(--orange)); }
+.live .blocks i.on { background: var(--live); }
+
+/* Next up */
+.next { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 24px; align-items: end; background: var(--white); border: 1px solid var(--rule); padding: 18px 20px; }
+.next .k { font: 400 9px var(--pixel); color: var(--orange); text-transform: uppercase; display: flex; align-items: center; gap: 6px; }
+.next .k::before { content: ""; width: 6px; height: 6px; background: var(--orange); }
+.next h2 { font: 700 20px/1.2 var(--text); margin: 4px 0 2px; letter-spacing: -0.02em; text-wrap: balance; }
+.next h2 a:hover { color: var(--orange); }
+.next p { margin: 0; color: var(--mid); font-size: 11px; }
+.next .blocks { grid-column: 1 / -1; height: 8px; }
+.big { display: flex; gap: 14px; }
+.big div { text-align: center; }
+.big b { display: block; font: 400 34px/1 var(--pixel); color: var(--ink); font-variant-numeric: tabular-nums; }
+.big small { font: 400 8px var(--pixel); color: var(--soft); text-transform: uppercase; }
+.big .sep { font: 400 30px/1 var(--pixel); color: var(--rule); align-self: start; }
+
+/* Time filter */
+.filters { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.filters .px { font-size: 9px; color: var(--soft); margin-right: 4px; }
+.tbtn { background: var(--white); border: 1px solid var(--rule); padding: 3px 9px; cursor: pointer; font: 400 9px var(--pixel); text-transform: uppercase; color: var(--mid); }
+.tbtn small { color: var(--soft); margin-left: 4px; font-size: 9px; }
+.tbtn:hover { border-color: var(--ink); color: var(--ink); }
+.tbtn[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: #fff; }
+.tbtn[aria-pressed="true"] small { color: rgba(255,255,255,.75); }
+
+/* List rows */
+.list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule-2); }
+.row { display: grid; grid-template-columns: 8px 14px minmax(0, 1fr) 120px 74px 22px; align-items: center; gap: 12px; padding: 9px 8px 9px 6px; border-bottom: 1px solid var(--rule-2); position: relative; }
+.row:hover { background: var(--white); }
+.row:hover .name { color: var(--orange); }
+.sw { width: 8px; height: 8px; background: var(--c); }
+.row .ic { color: var(--mid); }
+.row .txt { min-width: 0; }
+.name { font-weight: 700; font-size: 12px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.name::after { content: ""; position: absolute; inset: 0; }
+.desc { color: var(--mid); font-size: 10.5px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.desc .d { color: var(--soft); }
+.tbc { color: var(--orange); font: 400 8px var(--pixel); margin-left: 4px; vertical-align: 1px; }
+.days { text-align: right; font: 400 12px var(--pixel); color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.days small { font-size: 8px; color: var(--soft); margin-left: 2px; }
+.live .days { color: var(--live); }
+.pin { position: relative; z-index: 1; width: 18px; height: 18px; border: 1px solid var(--rule); background: var(--white); cursor: pointer; display: grid; place-items: center; color: var(--soft); padding: 0; }
+.pin:hover { border-color: var(--orange); color: var(--orange); }
+.pin[aria-pressed="true"] { background: var(--orange); border-color: var(--orange); color: #fff; }
+.pin svg.ic { width: 10px; height: 10px; stroke-width: 2.2; }
+.del { position: relative; z-index: 1; background: none; border: 0; padding: 0; cursor: pointer; color: var(--soft); font: 400 8px var(--pixel); text-transform: uppercase; margin-left: 6px; }
+.del:hover { color: var(--movies); }
+.more { margin-top: 10px; width: 100%; background: var(--white); border: 1px dashed var(--rule); padding: 8px; cursor: pointer; font: 400 9px var(--pixel); text-transform: uppercase; color: var(--mid); }
+.more:hover { border-color: var(--orange); color: var(--orange); }
+.src { font: 400 8px var(--pixel); color: var(--soft); text-transform: uppercase; }
+.empty { color: var(--mid); padding: 14px 0; margin: 0; font-size: 11px; }
+@media (max-width: 640px) {
+  .row { grid-template-columns: 8px minmax(0, 1fr) 64px 20px; row-gap: 6px; }
+  .row > .ic { display: none; }
+  .row .blocks { grid-column: 2 / -1; grid-row: 2; }
+  .next { grid-template-columns: 1fr; }
+  .big { gap: 8px; }
+  .big b { font-size: 26px; }
+  .big .sep { display: none; }
+}
+
+/* TBA + add */
+.tba { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0 28px; }
+.tba li { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px dotted var(--rule); font-size: 11px; }
+.tba li .sw { width: 6px; height: 6px; }
+.tba li span:nth-child(2) { flex: 1; }
+.tba li span:last-child { font: 400 9px var(--pixel); color: var(--soft); }
+form.add { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; }
+form.add label { display: grid; gap: 3px; font: 400 8px var(--pixel); color: var(--soft); text-transform: uppercase; flex: 1 1 150px; }
+form.add input, form.add select { border: 1px solid var(--rule); background: var(--white); height: 24px; padding: 0 6px; font-size: 11px; text-transform: none; color: var(--ink); }
+form.add input:focus, form.add select:focus { border-color: var(--orange); outline: none; }
+.btn { background: var(--ink); color: #fff; border: 0; height: 24px; padding: 0 12px; cursor: pointer; font: 400 9px var(--pixel); text-transform: uppercase; display: inline-flex; align-items: center; gap: 6px; }
+.btn:hover { background: var(--orange); }
+.btn.alt { background: var(--white); color: var(--ink); border: 1px solid var(--rule); }
+.btn.alt:hover { border-color: var(--orange); color: var(--orange); }
+.btn[aria-pressed="true"] { background: var(--orange); }
+.btn svg.ic { width: 10px; height: 10px; stroke-width: 2.2; }
+
+/* Detail */
+.crumb { font: 400 9px var(--pixel); text-transform: uppercase; color: var(--soft); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.crumb a { color: var(--mid); }
+.crumb a:hover { color: var(--orange); }
+.crumb b { color: var(--ink); font-weight: 400; }
+.d-head { display: flex; gap: 14px; align-items: start; }
+.d-head .sq { width: 34px; height: 34px; background: var(--c); color: #fff; display: grid; place-items: center; flex: none; }
+.d-head .sq svg.ic { width: 18px; height: 18px; stroke-width: 1.8; }
+.d-head h1 { font: 700 24px/1.15 var(--text); letter-spacing: -0.03em; margin: 0; text-wrap: balance; }
+.d-head p { margin: 4px 0 0; color: var(--mid); font-size: 11.5px; max-width: 62ch; }
+.d-count { background: var(--white); border: 1px solid var(--rule); padding: 20px; display: grid; gap: 14px; }
+.d-count .top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; align-items: end; }
+.d-count .big b { font-size: 48px; }
+.d-count .blocks { height: 10px; }
+.d-count .meta { display: flex; justify-content: space-between; font: 400 8px var(--pixel); color: var(--soft); text-transform: uppercase; gap: 8px; flex-wrap: wrap; }
+.d-count .meta b { color: var(--ink); font-weight: 400; }
+.state { font: 400 9px var(--pixel); text-transform: uppercase; color: var(--mid); display: inline-flex; align-items: center; gap: 6px; }
+.state::before { content: ""; width: 6px; height: 6px; background: var(--soft); }
+.state.live { color: var(--live); } .state.live::before { background: var(--live); animation: blink 1s steps(1) infinite; }
+.state.soon { color: var(--orange); } .state.soon::before { background: var(--orange); }
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .state.live::before { animation: none; } }
+.actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.cols { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.cols p { margin: 0 0 12px; font-size: 12px; line-height: 1.75; max-width: 64ch; }
+table.kv { width: 100%; border-collapse: collapse; font-size: 11px; }
+table.kv th, table.kv td { text-align: left; padding: 6px 0; border-bottom: 1px dotted var(--rule); vertical-align: top; }
+table.kv th { font: 400 8px/1.9 var(--pixel); color: var(--soft); text-transform: uppercase; width: 38%; padding-right: 10px; }
+table.kv td { overflow-wrap: anywhere; }
+@media (max-width: 640px) { .cols { grid-template-columns: 1fr; } .d-count .big b { font-size: 30px; } }
+
+footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; padding: 12px 28px; border-top: 1px solid var(--rule); font: 400 8px/1.8 var(--pixel); color: var(--soft); text-transform: uppercase; background: var(--white); }
+.note { max-width: 960px; margin: 10px auto 0; color: #8a8a8a; font-size: 10px; line-height: 1.6; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="preload" aria-hidden="true"><i></i></div>
+  <header class="top">
+    <a class="logo" href="#" aria-label="World Countdowns home"><b>WORLD<span>_</span>COUNTDOWNS</b><small id="loaded">v2.0</small></a>
+    <div class="clock"><b id="nowClock">--:--:--</b><span id="tzLabel"></span></div>
+  </header>
+  <nav class="menu" aria-label="Sections">
+    <ul id="menu"></ul>
+    <label class="search" for="search"><span>Find</span><input id="search" type="search" autocomplete="off" aria-label="Search countdowns"></label>
+  </nav>
+  <main id="home"></main>
+  <main id="detail" hidden></main>
+  <footer><span>© 2026 World Countdowns</span><span>Best viewed at 1024×768</span></footer>
+</div>
+<p class="note">Dates as announced on 8 Oct 2026. TBC marks provisional dates. Releases without a set time count down to midnight in your time zone. Bars fill over the final 365 days before an event, and through the event while it is live. Pins and your own countdowns stay in this browser.</p>
+
+<script>
+const ICONS = {
+  ball: '<circle cx="12" cy="12" r="9"/><path d="M12 7l4 3-1.5 4.5h-5L8 10z"/><path d="M12 3v4M21 10.5l-5-.5M17.5 19l-3-4.5M6.5 19l3-4.5M3 10.5l5-.5"/>',
+  flag: '<path d="M5 21V4M5 4h13l-2.5 4L18 12H5"/>',
+  racket: '<ellipse cx="10" cy="9" rx="6" ry="6.5" transform="rotate(-45 10 9)"/><path d="M14.5 13.5L20 19"/>',
+  golf: '<path d="M8 20V3l8 3.5L8 10"/><path d="M4 20h12"/>',
+  oval: '<ellipse cx="12" cy="12" rx="9.5" ry="5.5" transform="rotate(-35 12 12)"/><path d="M9 15l6-6M10.5 11l2.5 2.5M12 9.5l2.5 2.5"/>',
+  bat: '<path d="M17 3l4 4-9 9-4-4z"/><path d="M8 12l-5 5 4 4 5-5"/><circle cx="19" cy="19" r="2"/>',
+  torch: '<path d="M8 10h8l-2 11h-4z"/><path d="M12 7c-2-1.5-1.5-3.5 0-5 1.5 1.5 2 3.5 0 5z"/>',
+  snow: '<path d="M12 2v20M3.3 7l17.4 10M20.7 7L3.3 17"/><path d="M9.5 3.5L12 6l2.5-2.5M9.5 20.5L12 18l2.5 2.5"/>',
+  trophy: '<path d="M7 4h10v5a5 5 0 01-10 0z"/><path d="M7 6H4v1a3 3 0 003 3M17 6h3v1a3 3 0 01-3 3M12 14v4M8 21h8"/>',
+  pad: '<path d="M7 8h10a4 4 0 014 4v2.5a2.5 2.5 0 01-4.5 1.5L15 14H9l-1.5 2A2.5 2.5 0 013 14.5V12a4 4 0 014-4z"/><path d="M7.5 11v3M6 12.5h3M15.5 12h.01M17.5 13.5h.01"/>',
+  film: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 5v14M17 5v14M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/>',
+  ballot: '<path d="M4 13h16v7H4z"/><path d="M8 13V4h8v9M10.5 8.5l1.5 1.5 3-3"/>',
+  gift: '<rect x="3" y="9" width="18" height="12" rx="1"/><path d="M12 9v12M3 13h18M12 9c-2-4-6-4-6-1.5S10 9 12 9zM12 9c2-4 6-4 6-1.5S14 9 12 9z"/>',
+  spark: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/>',
+  eclipse: '<circle cx="12" cy="12" r="5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/>',
+  moon: '<path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/>',
+  star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+  pin: '<path d="M9 3h6l-1 6 3.5 3.5v1.5h-11v-1.5L10 9z"/><path d="M12 14v7"/>',
+  grid: '<rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9S9.5 5.5 12 3z"/>',
+  back: '<path d="M15 5l-7 7 7 7"/>',
+  ext: '<path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+};
+const icon = (k, cls = "ic") => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[k] || ICONS.star}</svg>`;
+
+// t: ISO start. Trailing "Z" = fixed global moment; no Z = local time. end: shows "live" until then.
+// where/about/facts/link feed the detail page.
+const EVENTS = [
+  { cat: "sports", ic: "flag", name: "F1 Abu Dhabi Grand Prix", desc: "Final round of the 2026 championship, under the lights at Yas Marina.", t: "2026-12-06T13:00:00Z", end: "2026-12-06T15:00:00Z",
+    where: "Yas Marina Circuit, Abu Dhabi, UAE", link: "https://www.formula1.com",
+    about: "The season closes with a twilight race that starts in daylight and finishes under floodlights. 2026 is the first year of Formula 1's new engine and chassis rules, so this finale wraps up a reset season.",
+    facts: [["Round", "Season finale"], ["Circuit length", "5.281 km"], ["Race laps", "58"], ["Start time", "17:00 local (13:00 UTC)"]] },
+  { cat: "sports", ic: "racket", name: "Australian Open", desc: "First tennis Grand Slam of the year at Melbourne Park.", t: "2027-01-17T00:00:00Z", end: "2027-01-31T12:00:00Z",
+    where: "Melbourne Park, Melbourne, Australia", link: "https://ausopen.com",
+    about: "The first Grand Slam of the season, played on hard courts in the Australian summer. Opening Week runs from 11 to 16 January, and main-draw play starts on Sunday 17 January.",
+    facts: [["Surface", "Hard court"], ["Opening Week", "11–16 Jan 2027"], ["Main draw", "17–31 Jan 2027"], ["Finals", "30 & 31 Jan 2027"]] },
+  { cat: "sports", ic: "oval", name: "Super Bowl LXI", desc: "NFL championship game at SoFi Stadium, Inglewood.", t: "2027-02-14T23:30:00Z", end: "2027-02-15T03:30:00Z",
+    where: "SoFi Stadium, Inglewood, California", link: "https://www.nfl.com/super-bowl",
+    about: "The 61st Super Bowl decides the 2026 NFL season. SoFi Stadium hosts for the second time, after Super Bowl LVI in 2022. The kick-off time shown is the usual early-evening Eastern slot.",
+    facts: [["Edition", "61st Super Bowl"], ["Season", "2026 NFL"], ["Previous at SoFi", "Super Bowl LVI (2022)"], ["Kick-off", "Approx. 6:30 pm ET"]] },
+  { cat: "sports", ic: "flag", name: "F1 2027 season opener", desc: "The new season starts with a sprint weekend in Bahrain.", t: "2027-03-14T15:00:00Z", end: "2027-03-14T17:00:00Z",
+    where: "Bahrain International Circuit, Sakhir", link: "https://www.formula1.com",
+    about: "The 24-race 2027 calendar opens in Bahrain. For the first time a season begins with a sprint weekend, so the year's first points are scored in a short-format race before the Grand Prix.",
+    facts: [["Round", "1 of 24"], ["Format", "Sprint weekend"], ["Calendar", "24 races, 10 sprints"], ["Next race", "Saudi Arabia, 21 Mar"]] },
+  { cat: "sports", ic: "golf", name: "The Masters", desc: "First golf major of the year, played for the green jacket at Augusta.", t: "2027-04-08T12:00:00Z", end: "2027-04-11T23:59:00Z",
+    where: "Augusta National Golf Club, Augusta, Georgia", link: "https://www.masters.com",
+    about: "The only major played at the same course every year. Four rounds from Thursday to Sunday, with the green jacket presented to the winner in Butler Cabin.",
+    facts: [["Major", "1st of 4 in 2027"], ["Rounds", "4 (Thu–Sun)"], ["Par", "72"], ["Prize", "Green jacket"]] },
+  { cat: "sports", ic: "ball", name: "FIFA Women's World Cup", desc: "First Women's World Cup in South America, hosted by Brazil.", t: "2027-06-24T00:00:00", end: "2027-07-25T23:59:00",
+    where: "Brazil, final at the Maracanã, Rio de Janeiro", link: "https://www.fifa.com",
+    about: "Brazil hosts the tenth Women's World Cup, the first in South America. 32 teams play across host cities nationwide, and the final is at the Maracanã.",
+    facts: [["Edition", "10th"], ["Teams", "32"], ["Dates", "24 Jun – 25 Jul 2027"], ["Final", "Maracanã, Rio de Janeiro"]] },
+  { cat: "sports", ic: "racket", name: "Wimbledon", desc: "The grass-court Grand Slam at the All England Club.", t: "2027-06-28T10:00:00Z", end: "2027-07-11T18:00:00Z", tbc: true,
+    where: "All England Lawn Tennis Club, London", link: "https://www.wimbledon.com",
+    about: "The oldest tennis tournament in the world and the only Grand Slam on grass. Dates here follow the usual late-June start and are provisional until the club confirms them.",
+    facts: [["Surface", "Grass"], ["Duration", "Two weeks"], ["Dress code", "All white"], ["Status", "Dates TBC"]] },
+  { cat: "sports", ic: "golf", name: "Ryder Cup", desc: "Europe vs USA at Adare Manor, Ireland, in the event's 100th year.", t: "2027-09-17T07:00:00Z", end: "2027-09-19T19:00:00Z",
+    where: "Adare Manor, County Limerick, Ireland", link: "https://www.rydercup.com",
+    about: "Europe and the United States meet over three days of foursomes, fourballs and singles. 2027 marks 100 years since the first Ryder Cup, and the event returns to Ireland for the first time since 2006.",
+    facts: [["Teams", "Europe v USA"], ["Build-up days", "13–16 Sep 2027"], ["Matches", "17–19 Sep 2027"], ["Last in Ireland", "2006, The K Club"]] },
+  { cat: "sports", ic: "oval", name: "Rugby World Cup", desc: "Australia hosts the first 24-team Rugby World Cup.", t: "2027-10-01T00:00:00", end: "2027-11-13T23:59:00",
+    where: "Australia (nationwide)", link: "https://www.rugbyworldcup.com",
+    about: "The men's Rugby World Cup expands from 20 to 24 teams and adds a round of 16. Australia hosts for the first time since 2003.",
+    facts: [["Teams", "24"], ["New stage", "Round of 16"], ["Dates", "1 Oct – 13 Nov 2027"], ["Last hosted", "Australia, 2003"]] },
+  { cat: "sports", ic: "bat", name: "ICC Cricket World Cup", desc: "14-team ODI World Cup in South Africa, Zimbabwe and Namibia.", t: "2027-10-04T00:00:00", end: "2027-11-21T23:59:00", tbc: true,
+    where: "South Africa, Zimbabwe & Namibia", link: "https://www.icc-cricket.com",
+    about: "The men's 50-over World Cup returns to southern Africa for the first time since 2003, with the field growing to 14 teams. The start date is provisional; the final is set for 21 November.",
+    facts: [["Format", "ODI, 50 overs"], ["Teams", "14"], ["Final", "21 Nov 2027"], ["Status", "Start date TBC"]] },
+  { cat: "sports", ic: "ball", name: "UEFA Euro 2028", desc: "24 nations across the UK and Ireland.", t: "2028-06-09T00:00:00", end: "2028-07-09T23:59:00",
+    where: "England, Scotland, Wales & Republic of Ireland", link: "https://www.uefa.com",
+    about: "The European Championship is co-hosted by five associations across the UK and Ireland, with the final at Wembley.",
+    facts: [["Teams", "24"], ["Matches", "51"], ["Dates", "9 Jun – 9 Jul 2028"], ["Final", "Wembley Stadium, London"]] },
+  { cat: "sports", ic: "torch", name: "LA 2028 Olympics", desc: "Opening ceremony of the Summer Games in Los Angeles.", t: "2028-07-15T02:00:00Z", end: "2028-07-31T06:00:00Z",
+    where: "Los Angeles, California", link: "https://la28.org",
+    about: "Los Angeles hosts the Summer Olympics for the third time, after 1932 and 1984. New and returning sports include flag football, cricket, lacrosse, squash, and baseball/softball.",
+    facts: [["Dates", "14–30 Jul 2028"], ["LA host years", "1932, 1984, 2028"], ["New sports", "Flag football, cricket, lacrosse, squash"], ["Paralympics", "From 15 Aug 2028"]] },
+  { cat: "sports", ic: "snow", name: "Winter Olympics 2030", desc: "Winter Games spread across the French Alps and Nice.", t: "2030-02-01T00:00:00", end: "2030-02-17T23:59:00", tbc: true,
+    where: "French Alps & Nice, France", link: "https://olympics.com",
+    about: "France's fourth Winter Games are spread across mountain clusters in Haute-Savoie, Savoie and Briançon, with ice sports on the coast in Nice.",
+    facts: [["Host", "French Alps"], ["Ice sports", "Nice"], ["Previous in France", "Albertville 1992"], ["Status", "Dates TBC"]] },
+  { cat: "sports", ic: "trophy", name: "FIFA World Cup 2030", desc: "Centenary World Cup across Spain, Portugal and Morocco, with opening games in South America.", t: "2030-06-08T00:00:00", end: "2030-07-21T23:59:00", tbc: true,
+    where: "Spain, Portugal & Morocco + Uruguay, Argentina, Paraguay", link: "https://www.fifa.com",
+    about: "The World Cup marks 100 years since the first tournament in Uruguay. Three celebration matches open the event in South America before the tournament moves to Spain, Portugal and Morocco.",
+    facts: [["Teams", "48"], ["Centenary of", "Uruguay 1930"], ["Continents", "3"], ["Status", "Dates TBC"]] },
+
+  { cat: "games", ic: "pad", name: "Call of Duty: Modern Warfare 4", desc: "The next Modern Warfare campaign and multiplayer.", t: "2026-10-23T00:00:00",
+    where: "PS5 · Xbox Series X|S · PC", link: "https://www.callofduty.com",
+    about: "The next entry in the Modern Warfare sub-series, with a new campaign, multiplayer and a fresh season of live content after launch.",
+    facts: [["Developer", "Infinity Ward"], ["Publisher", "Activision"], ["Platforms", "PS5, Xbox Series X|S, PC"], ["Release", "23 Oct 2026"]] },
+  { cat: "games", ic: "pad", name: "Phantom Blade Zero", desc: "Kung-fu action RPG from S-Game on PS5 and PC.", t: "2026-10-29T00:00:00",
+    where: "PS5 · PC", link: "https://www.phantomblade.com",
+    about: "A fast, combo-heavy action RPG set in a dark wuxia world, built around martial-arts animation and boss fights.",
+    facts: [["Developer", "S-Game"], ["Genre", "Action RPG"], ["Platforms", "PS5, PC"], ["Release", "29 Oct 2026"]] },
+  { cat: "games", ic: "pad", name: "Grand Theft Auto VI", desc: "Rockstar's return to Vice City on PS5 and Xbox Series X|S.", t: "2026-11-19T00:00:00",
+    where: "PS5 · Xbox Series X|S", link: "https://www.rockstargames.com/VI",
+    about: "Rockstar's first new GTA in more than a decade, set in the state of Leonida and its Vice City. The release moved twice before landing on 19 November 2026.",
+    facts: [["Developer", "Rockstar Games"], ["Setting", "Leonida / Vice City"], ["Leads", "Lucia & Jason"], ["Platforms", "PS5, Xbox Series X|S"]] },
+
+  { cat: "movies", ic: "film", name: "The Hunger Games: Sunrise on the Reaping", desc: "Prequel following a young Haymitch Abernathy.", t: "2026-11-20T00:00:00",
+    where: "In cinemas", link: "https://www.lionsgate.com",
+    about: "Adapted from Suzanne Collins's 2025 novel, the film follows Haymitch Abernathy's Games, 24 years before Katniss.",
+    facts: [["Director", "Francis Lawrence"], ["Based on", "Suzanne Collins (2025)"], ["Studio", "Lionsgate"], ["Release", "20 Nov 2026"]] },
+  { cat: "movies", ic: "film", name: "Narnia: The Magician's Nephew", desc: "Greta Gerwig's Narnia, in IMAX before Netflix on 25 Dec.", t: "2026-11-26T00:00:00",
+    where: "IMAX cinemas, then Netflix", link: "https://www.netflix.com",
+    about: "Greta Gerwig writes and directs Netflix's first Narnia film. It plays exclusively in IMAX over Thanksgiving before streaming on Christmas Day.",
+    facts: [["Director", "Greta Gerwig"], ["IMAX release", "26 Nov 2026"], ["On Netflix", "25 Dec 2026"], ["Based on", "C.S. Lewis"]] },
+  { cat: "movies", ic: "film", name: "Jumanji 3", desc: "The jungle game comes back for a third round.", t: "2026-12-11T00:00:00",
+    where: "In cinemas", link: "https://www.sonypictures.com",
+    about: "The third film in the rebooted series brings back the core video-game cast for another trip into Jumanji.",
+    facts: [["Director", "Jake Kasdan"], ["Cast", "Dwayne Johnson, Kevin Hart, Jack Black, Karen Gillan"], ["Studio", "Sony Pictures"], ["Release", "11 Dec 2026"]] },
+  { cat: "movies", ic: "film", name: "Avengers: Doomsday", desc: "Robert Downey Jr. returns as Doctor Doom.", t: "2026-12-18T00:00:00",
+    where: "In cinemas", link: "https://www.marvel.com",
+    about: "The Russo brothers return to the Avengers, with Robert Downey Jr. as Victor von Doom. It opens on the same day as Dune: Part Three.",
+    facts: [["Directors", "Anthony & Joe Russo"], ["Studio", "Marvel Studios"], ["Villain", "Doctor Doom"], ["Same day as", "Dune: Part Three"]] },
+  { cat: "movies", ic: "film", name: "Dune: Part Three", desc: "Villeneuve adapts Dune Messiah. Same day as Doomsday.", t: "2026-12-18T00:00:00",
+    where: "In cinemas", link: "https://www.warnerbros.com",
+    about: "Denis Villeneuve's third Dune film adapts Frank Herbert's Dune Messiah, picking up Paul Atreides's story years after he takes power.",
+    facts: [["Director", "Denis Villeneuve"], ["Based on", "Dune Messiah (1969)"], ["Studio", "Legendary / Warner Bros."], ["Same day as", "Avengers: Doomsday"]] },
+  { cat: "movies", ic: "film", name: "Star Wars: Starfighter", desc: "A new standalone Star Wars story starring Ryan Gosling.", t: "2027-05-28T00:00:00",
+    where: "In cinemas", link: "https://www.starwars.com",
+    about: "A standalone adventure set after the Skywalker saga, with Ryan Gosling leading a new cast.",
+    facts: [["Director", "Shawn Levy"], ["Star", "Ryan Gosling"], ["Studio", "Lucasfilm"], ["Release", "28 May 2027"]] },
+  { cat: "movies", ic: "film", name: "Shrek 5", desc: "The first new Shrek film since 2010.", t: "2027-06-30T00:00:00",
+    where: "In cinemas", link: "https://www.dreamworks.com",
+    about: "The original voice cast returns for the first main Shrek film since Shrek Forever After, with Zendaya joining as Shrek's daughter.",
+    facts: [["Studio", "DreamWorks Animation"], ["Voices", "Mike Myers, Eddie Murphy, Cameron Diaz"], ["New cast", "Zendaya"], ["Release", "30 Jun 2027"]] },
+  { cat: "movies", ic: "film", name: "The Batman Part II", desc: "Robert Pattinson returns to Gotham.", t: "2027-10-01T00:00:00",
+    where: "In cinemas", link: "https://www.dc.com",
+    about: "Matt Reeves continues his crime-noir take on Batman, following the 2022 film.",
+    facts: [["Director", "Matt Reeves"], ["Star", "Robert Pattinson"], ["Studio", "DC Studios / Warner Bros."], ["Release", "1 Oct 2027"]] },
+  { cat: "movies", ic: "film", name: "Avengers: Secret Wars", desc: "The finale of Marvel's Multiverse Saga.", t: "2027-12-17T00:00:00",
+    where: "In cinemas", link: "https://www.marvel.com",
+    about: "The closing chapter of the Multiverse Saga, arriving a year after Avengers: Doomsday.",
+    facts: [["Directors", "Anthony & Joe Russo"], ["Studio", "Marvel Studios"], ["Saga", "Multiverse Saga finale"], ["Release", "17 Dec 2027"]] },
+  { cat: "movies", ic: "film", name: "The Lord of the Rings: The Hunt for Gollum", desc: "Andy Serkis directs and returns as Gollum.", t: "2027-12-17T00:00:00",
+    where: "In cinemas", link: "https://www.warnerbros.com",
+    about: "A new Middle-earth film following the search for Gollum before the events of The Fellowship of the Ring.",
+    facts: [["Director", "Andy Serkis"], ["Producer", "Peter Jackson"], ["Studio", "Warner Bros."], ["Release", "17 Dec 2027"]] },
+
+  { cat: "world", ic: "moon", name: "Halloween", desc: "Costumes, pumpkins and trick-or-treat.", t: "2026-10-31T00:00:00", end: "2026-10-31T23:59:59",
+    where: "Worldwide", about: "Celebrated on 31 October, the eve of All Hallows' Day.",
+    facts: [["Date", "Saturday 31 Oct 2026"], ["Origin", "Celtic festival of Samhain"]] },
+  { cat: "world", ic: "ballot", name: "US midterm elections", desc: "Every House seat and about a third of the Senate on the ballot.", t: "2026-11-03T11:00:00Z", end: "2026-11-04T06:00:00Z",
+    where: "United States", link: "https://www.usa.gov/midterm-elections",
+    about: "Halfway through the presidential term, voters elect the whole House of Representatives, about a third of the Senate, and most state governors. The countdown is to the first polls opening on the East Coast.",
+    facts: [["Election day", "Tuesday 3 Nov 2026"], ["House seats", "All 435"], ["Senate seats", "33 regular + specials"], ["Governors", "36 races"]] },
+  { cat: "world", ic: "gift", name: "Christmas Day", desc: "25 December.", t: "2026-12-25T00:00:00", end: "2026-12-25T23:59:59",
+    where: "Worldwide", about: "Christmas Day falls on a Friday in 2026, giving many people a long weekend.",
+    facts: [["Date", "Friday 25 Dec 2026"]] },
+  { cat: "world", ic: "spark", name: "New Year 2027", desc: "Midnight in your time zone.", t: "2027-01-01T00:00:00", end: "2027-01-01T00:15:00",
+    where: "Your time zone", about: "The countdown runs to midnight where you are. Kiribati's Line Islands see 2027 first, about 26 hours before the last inhabited places in American Samoa.",
+    facts: [["First to celebrate", "Kiribati (UTC+14)"], ["Last inhabited", "American Samoa (UTC−11)"], ["Day", "Friday 1 Jan 2027"]] },
+  { cat: "world", ic: "eclipse", name: "Total solar eclipse", desc: "Over 6 minutes of totality across Spain, North Africa and Egypt.", t: "2027-08-02T10:07:00Z", end: "2027-08-02T11:00:00Z",
+    where: "Spain, Gibraltar, North Africa, Egypt, Saudi Arabia, Yemen", link: "https://eclipse.gsfc.nasa.gov",
+    about: "The longest total solar eclipse over land this century. The Moon's shadow crosses southern Spain and North Africa, with the longest totality near Luxor, Egypt. The countdown is to greatest eclipse.",
+    facts: [["Max totality", "6 min 23 s"], ["Best spot", "Near Luxor, Egypt"], ["Greatest eclipse", "10:07 UTC"], ["Path", "Spain → North Africa → Arabia"]] },
+];
+
+const slug = s => s.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+EVENTS.forEach(e => e.id = slug(e.name));
+
+const TBA = [
+  ["games", "pad", "Fable", "2027"], ["games", "pad", "Kingdom Hearts IV", "2027"], ["games", "pad", "Resident Evil (next)", "2027"],
+  ["games", "pad", "The Witcher 4", "2027+"], ["games", "pad", "The Elder Scrolls VI", "TBA"], ["games", "pad", "Intergalactic: The Heretic Prophet", "TBA"],
+  ["sports", "trophy", "UEFA Champions League Final", "Jun 2027"], ["sports", "flag", "Tour de France, Edinburgh start", "Jul 2027"],
+  ["sports", "bat", "The Ashes", "2027"], ["world", "globe", "Expo 2030 Riyadh", "Oct 2030"],
+];
+
+
+Object.assign(ICONS, {
+  tv: '<rect x="3" y="6" width="18" height="12" rx="1"/><path d="M8 3l4 3 4-3M8 21h8"/>',
+  rocket: '<path d="M12 3c3 2 4.5 5.5 4.5 9.5L14 17h-4l-2.5-4.5C7.5 8.5 9 5 12 3z"/><path d="M10 17l-2 4M14 17l2 4M12 9.5h.01"/>',
+  cal: '<rect x="3.5" y="5" width="17" height="15"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+});
+Object.assign(ICONS, { plus: '<path d="M12 5v14M5 12h14"/>', check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>' });
+
+const CATS = {
+  all: ["Index", "var(--orange)"], sports: ["Sports", "var(--sports)"], games: ["Games", "var(--games)"],
+  movies: ["Film & TV", "var(--movies)"], world: ["World", "var(--world)"], holidays: ["Holidays", "var(--holidays)"],
+  space: ["Space", "var(--space)"], pinned: ["Pinned", "var(--orange)"], mine: ["Mine", "var(--mine)"],
+};
+const DAY = 864e5, YEAR = 365 * DAY;
+const WHEN = { any: ["Any time", Infinity], week: ["7 days", 7 * DAY], month: ["31 days", 31 * DAY], year: ["365 days", YEAR] };
+
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+let mine = store.get("wc-mine", []);
+let pins = new Set(store.get("wc-pins2", []));
+let filter = store.get("wc-filter", "all");
+let when = store.get("wc-when", "any");
+let query = "";
+const PAGE = 60;
+let limit = PAGE;
+let META = null;
+let TBA_LIST = TBA.map(([cat, ic, name, when]) => ({ cat, ic, name, when }));
+
+const $ = s => document.querySelector(s);
+const pad = (n, l = 2) => String(n).padStart(l, "0");
+const fmtDate = new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short", year: "numeric" });
+const fmtLong = new Intl.DateTimeFormat(undefined, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+const fmtTime = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" });
+const fmtUTC = new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "UTC" });
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const hasTime = e => e.t.endsWith("Z") || e.mine;
+const all = () => EVENTS.concat(mine.map(m => ({ ic: "star", ...m, mine: true })));
+const byId = id => all().find(e => e.id === id);
+const colorOf = e => e.mine ? CATS.mine[1] : (CATS[e.cat] || CATS.world)[1];
+const catName = e => CATS[e.cat] ? CATS[e.cat][0] : "";
+const split = ms => { const s = Math.max(0, Math.floor(ms / 1000)); return { d: Math.floor(s / 86400), h: Math.floor(s % 86400 / 3600), m: Math.floor(s % 3600 / 60), s: s % 60 }; };
+
+function state(e, now) {
+  const start = new Date(e.t).getTime(), end = e.end ? new Date(e.end).getTime() : start;
+  if (now < start) return { kind: start - now < 7 * DAY ? "soon" : "upcoming", ms: start - now, start, end, p: Math.min(1, Math.max(0, 1 - (start - now) / YEAR)) };
+  if (e.end && now <= end) return { kind: "live", ms: end - now, start, end, p: (now - start) / Math.max(1, end - start) };
+  return { kind: "done", ms: 0, start, end, p: 1 };
+}
+const inWindow = (st, w) => st.kind === "live" || st.ms <= WHEN[w][1];
+const blocks = (p, n) => { const on = Math.round(p * n); return Array.from({ length: n }, (_, i) => `<i${i < on ? ' class="on"' : ""}></i>`).join(""); };
+const whenText = e => { const d = new Date(e.t); return fmtDate.format(d) + (hasTime(e) ? " " + fmtTime.format(d) : ""); };
+function daysHTML(st) {
+  const p = split(st.ms);
+  if (st.kind === "live") return `LIVE<small>${p.d ? p.d + "D LEFT" : pad(p.h) + "H LEFT"}</small>`;
+  if (p.d >= 1) return `${pad(p.d, 3)}<small>D</small>`;
+  return `${pad(p.h)}:${pad(p.m)}:${pad(p.s)}`;
+}
+const bigHTML = () => `<div><b data-u="d">000</b><small>days</small></div><span class="sep">:</span><div><b data-u="h">00</b><small>hrs</small></div><span class="sep">:</span><div><b data-u="m">00</b><small>min</small></div><span class="sep">:</span><div><b data-u="s">00</b><small>sec</small></div>`;
+const fillBig = (root, st) => { if (!root) return; const p = split(st.ms); root.querySelectorAll("[data-u]").forEach(el => el.textContent = el.dataset.u === "d" ? pad(p.d, 3) : pad(p[el.dataset.u])); };
+
+function togglePin(id) {
+  pins.has(id) ? pins.delete(id) : pins.add(id);
+  store.set("wc-pins2", [...pins]);
+  if (filter === "pinned" && !pins.size) filter = "all";
+  route();
+}
+
+/* Menu */
+function renderMenu() {
+  const items = Object.entries(CATS).filter(([k]) => (k !== "mine" || mine.length) && (k !== "pinned" || pins.size));
+  $("#menu").innerHTML = items.map(([k, [l, c]]) => `<li><button type="button" data-f="${k}" style="--c:${c}" aria-pressed="${!currentId() && filter === k}">${l}${k === "pinned" ? `<sup>${pins.size}</sup>` : ""}</button></li>`).join("");
+  $("#menu").querySelectorAll("[data-f]").forEach(b => b.onclick = () => {
+    filter = b.dataset.f; store.set("wc-filter", filter); limit = PAGE;
+    if (currentId()) location.hash = ""; else renderHome();
+  });
+}
+
+/* Rows */
+function row(e, st) {
+  const pinned = pins.has(e.id);
+  return `<li class="row${st.kind === "live" ? " live" : ""}" style="--c:${colorOf(e)}" data-id="${esc(e.id)}">
+    <span class="sw" title="${esc(catName(e))}"></span>${icon(e.ic)}
+    <span class="txt"><a class="name" href="#${esc(e.id)}">${esc(e.name)}${e.tbc ? '<span class="tbc">TBC</span>' : ""}</a>
+      <span class="desc">${esc(e.desc || "")} <span class="d">· ${whenText(e)}</span>${e.mine ? `<button class="del" type="button" data-del="${esc(e.id)}">remove</button>` : ""}</span></span>
+    <span class="blocks" aria-label="${Math.round(st.p * 100)}% elapsed">${blocks(st.p, 20)}</span>
+    <span class="days" data-days>${daysHTML(st)}</span>
+    <button class="pin" type="button" data-pin="${esc(e.id)}" aria-pressed="${pinned}" aria-label="${pinned ? "Unpin" : "Pin"} ${esc(e.name)}" title="${pinned ? "Unpin" : "Pin"}">${icon(pinned ? "check" : "plus")}</button>
+  </li>`;
+}
+function bind(root) {
+  root.querySelectorAll("[data-pin]").forEach(b => b.onclick = ev => { ev.preventDefault(); togglePin(b.dataset.pin); });
+  root.querySelectorAll("[data-del]").forEach(b => b.onclick = ev => {
+    ev.preventDefault();
+    const id = b.dataset.del;
+    mine = mine.filter(m => m.id !== id); pins.delete(id);
+    store.set("wc-mine", mine); store.set("wc-pins2", [...pins]);
+    if (filter === "mine" && !mine.length) filter = "all";
+    if (currentId()) location.hash = ""; else route();
+  });
+}
+
+/* Home */
+let shown = [];
+function renderHome() {
+  renderMenu();
+  const now = Date.now();
+  const live = all().map(e => ({ e, st: state(e, now) })).filter(r => r.st.kind !== "done");
+  const catOk = e => filter === "all" || (filter === "pinned" ? pins.has(e.id) : filter === "mine" ? e.mine : e.cat === filter && !e.mine);
+  const rows = live.filter(r => catOk(r.e) && inWindow(r.st, when))
+    .filter(({ e }) => !query || (e.name + " " + (e.desc || "") + " " + (e.where || "")).toLowerCase().includes(query))
+    .sort((a, b) => (b.st.kind === "live") - (a.st.kind === "live") || a.st.start - b.st.start);
+  shown = rows;
+  const ups = live.filter(r => r.st.kind !== "live").sort((a, b) => a.st.start - b.st.start);
+  const feat = ups.find(r => pins.has(r.e.id)) || ups[0];
+
+  const next = feat ? `<section class="next" style="--c:${colorOf(feat.e)}">
+      <div><div class="k">${pins.has(feat.e.id) ? "Next pinned" : "Next up"} / ${esc(catName(feat.e))}</div>
+        <h2><a href="#${esc(feat.e.id)}" id="featLink">${esc(feat.e.name)}</a></h2><p>${esc(feat.e.desc || "")} · ${whenText(feat.e)}</p></div>
+      <div class="big" id="featBig">${bigHTML()}</div>
+      <span class="blocks">${blocks(feat.st.p, 60)}</span>
+    </section>` : "";
+
+  const count = k => live.filter(r => catOk(r.e) && inWindow(r.st, k)).length;
+  const filters = `<div class="filters" role="group" aria-label="Filter by time"><span class="px">Show</span>${Object.entries(WHEN).map(([k, [l]]) => `<button class="tbtn" type="button" data-w="${k}" aria-pressed="${when === k}">${l}<small>${count(k)}</small></button>`).join("")}</div>`;
+
+  const pinnedRows = filter === "all" ? rows.filter(r => pins.has(r.e.id)) : [];
+  const restAll = filter === "all" ? rows.filter(r => !pins.has(r.e.id)) : rows;
+  const rest = restAll.slice(0, limit);
+  shown = pinnedRows.concat(rest);
+  const title = query ? `Results for "${esc(query)}"` : filter === "all" ? (when === "any" ? "Upcoming" : "Next " + WHEN[when][0]) : CATS[filter][0];
+  const lists = !rows.length
+    ? `<p class="empty">Nothing matches. Try a wider time range, another section, or clear the search.</p>`
+    : (pinnedRows.length ? `<section><h3 class="lbl">Pinned <em>${pinnedRows.length}</em></h3><ul class="list">${pinnedRows.map(r => row(r.e, r.st)).join("")}</ul></section>` : "")
+      + (rest.length ? `<section><h3 class="lbl">${title} <em>${restAll.length}</em></h3><ul class="list">${rest.map(r => row(r.e, r.st)).join("")}</ul>${restAll.length > rest.length ? `<button class="more" type="button" id="moreBtn">Show ${Math.min(PAGE * 2, restAll.length - rest.length)} more of ${restAll.length - rest.length} remaining</button>` : ""}</section>` : "");
+
+  const tbaItems = TBA_LIST.filter(x => filter === "all" || x.cat === filter);
+  const tba = tbaItems.length ? `<section><h3 class="lbl">Date TBA <em>${tbaItems.length}</em></h3><ul class="tba">${tbaItems.map(x => `<li><span class="sw" style="--c:${(CATS[x.cat] || CATS.world)[1]}"></span><span>${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener">${esc(x.name)}</a>` : esc(x.name)}</span><span>${esc(x.when)}</span></li>`).join("")}</ul></section>` : "";
+  const add = `<section><h3 class="lbl">Add your own</h3><form class="add" id="addForm">
+      <label for="addName">Event<input id="addName" required maxlength="60" placeholder="My birthday"></label>
+      <label for="addDesc">Note<input id="addDesc" maxlength="90" placeholder="Dinner at 8"></label>
+      <label for="addDate">Date + time<input id="addDate" type="datetime-local" required></label>
+      <label for="addCat">Section<select id="addCat"><option value="world">World</option><option value="sports">Sports</option><option value="games">Games</option><option value="movies">Movies</option></select></label>
+      <button class="btn" type="submit">${icon("plus")}Add</button></form></section>`;
+
+  const home = $("#home");
+  home.innerHTML = next + `<div>${filters}</div>` + `<div style="display:grid;gap:26px">${lists}</div>` + tba + add;
+  bind(home);
+  home.querySelectorAll("[data-w]").forEach(b => b.onclick = () => { when = b.dataset.w; store.set("wc-when", when); limit = PAGE; renderHome(); });
+  const more = $("#moreBtn"); if (more) more.onclick = () => { limit += PAGE * 2; renderHome(); };
+  $("#addForm").addEventListener("submit", ev => {
+    ev.preventDefault();
+    const name = $("#addName").value.trim(), t = $("#addDate").value;
+    if (!name || !t) return;
+    mine.push({ id: "mine-" + Date.now(), name, desc: $("#addDesc").value.trim(), t: t.length === 16 ? t + ":00" : t, cat: $("#addCat").value });
+    store.set("wc-mine", mine);
+    filter = "mine"; when = "any"; store.set("wc-filter", filter); store.set("wc-when", when);
+    renderHome(); window.scrollTo(0, 0);
+  });
+  if (feat) fillBig($("#featBig"), feat.st);
+  $("#loaded").textContent = `v3.0 // ${live.length} events loaded` + (META ? ` // updated ${fmtDate.format(new Date(META.generated))}` : "");
+}
+
+/* Detail */
+function duration(st) {
+  if (st.end <= st.start) return null;
+  const d = Math.round((st.end - st.start) / DAY);
+  if (d >= 1) return `${d + 1} days`;
+  const h = Math.round((st.end - st.start) / 36e5);
+  return `About ${h} hour${h === 1 ? "" : "s"}`;
+}
+function renderDetail(id) {
+  renderMenu();
+  const e = byId(id), host = $("#detail");
+  if (!e) { host.innerHTML = `<div class="crumb"><a href="#">Index</a> &gt; <b>Not found</b></div><p class="empty">That countdown isn't here. It may have been removed.</p>`; return; }
+  const now = Date.now(), st = state(e, now), d = new Date(e.t), pinned = pins.has(e.id);
+  const statusTxt = { live: "Live now", soon: "This week", upcoming: "Upcoming", done: "Finished" }[st.kind];
+  const dur = duration(st);
+  const whenRows = [
+    ["Starts", fmtLong.format(d) + (hasTime(e) ? ", " + fmtTime.format(d) : "")],
+    e.end && dur && st.end - st.start >= DAY ? ["Ends", fmtLong.format(new Date(e.end))] : null,
+    dur ? ["Duration", dur] : null,
+    e.t.endsWith("Z") ? ["UTC", fmtUTC.format(d)] : ["Time basis", "Midnight, your time zone"],
+    ["Time zone", Intl.DateTimeFormat().resolvedOptions().timeZone || "Local"],
+    e.where ? ["Where", e.where] : null,
+    e.tbc ? ["Status", "Provisional (TBC)"] : null,
+  ].filter(Boolean);
+  const related = all().map(x => ({ e: x, st: state(x, now) }))
+    .filter(r => r.e.cat === e.cat && r.e.id !== e.id && r.st.kind !== "done")
+    .sort((a, b) => a.st.start - b.st.start).slice(0, 5);
+
+  host.innerHTML = `
+    <div class="crumb"><a href="#">Index</a> &gt; <a href="#" data-cat="${esc(e.cat)}">${esc(catName(e))}</a> &gt; <b>${esc(e.name)}</b></div>
+    <div class="d-head" style="--c:${colorOf(e)}"><span class="sq">${icon(e.ic)}</span><div><h1>${esc(e.name)}</h1><p>${esc(e.desc || "")}</p></div></div>
+    <section class="d-count${st.kind === "live" ? " live" : ""}" style="--c:${colorOf(e)}">
+      <div class="top"><span class="state ${st.kind}">${statusTxt}</span>
+        <div class="actions">
+          <button class="btn${pinned ? "" : " alt"}" type="button" data-pin="${esc(e.id)}" aria-pressed="${pinned}">${icon(pinned ? "check" : "plus")}${pinned ? "Pinned" : "Pin"}</button>
+          ${e.link ? `<a class="btn alt" href="${esc(e.link)}" target="_blank" rel="noopener">${/wikipedia\.org/.test(e.link) ? "Wikipedia" : /wikidata\.org/.test(e.link) ? "Wikidata" : "Official site"} &gt;&gt;</a>` : ""}
+          ${e.mine ? `<button class="btn alt" type="button" data-del="${esc(e.id)}">Remove</button>` : ""}
+        </div></div>
+      <div class="big" id="dBig">${bigHTML()}</div>
+      <span class="blocks" id="dBlocks">${blocks(st.p, 60)}</span>
+      <div class="meta"><span>${st.kind === "live" ? "Started" : "T-365 days"}</span><span><b id="dPct"></b></span><span>${st.kind === "live" ? "Ends" : "Start"}</span></div>
+    </section>
+    <div class="cols">
+      <section><h3 class="lbl">About</h3><p>${esc(e.about || e.desc || "Your own countdown.")}</p>
+        ${e.facts && e.facts.length ? `<table class="kv">${e.facts.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join("")}</table>` : ""}</section>
+      <section><h3 class="lbl">When</h3><table class="kv">${whenRows.map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join("")}</table>
+        <p class="src" style="margin-top:10px">Source: ${esc({ curated: "Hand-checked", wikidata: "Wikidata", "jolpica-f1": "Jolpica F1 API", "nager-date": "Nager.Date", astronomy: "Astronomical tables" }[e.src] || (e.mine ? "You" : "Hand-checked"))}</p></section>
+    </div>
+    ${related.length ? `<section><h3 class="lbl">More ${esc(catName(e))} <em>${related.length}</em></h3><ul class="list">${related.map(r => row(r.e, r.st)).join("")}</ul></section>` : ""}
+    <div class="crumb"><a href="#">&lt;&lt; Back to index</a></div>`;
+  bind(host);
+  host.querySelectorAll("[data-cat]").forEach(a => a.onclick = () => { filter = a.dataset.cat; store.set("wc-filter", filter); });
+  shown = related;
+  tickDetail(now);
+}
+function tickDetail(now) {
+  const e = byId(currentId()); if (!e) return;
+  const st = state(e, now);
+  fillBig($("#dBig"), st);
+  const b = $("#dBlocks"); if (b) b.innerHTML = blocks(st.p, 60);
+  const p = $("#dPct"); if (p) p.textContent = (st.p * 100).toFixed(1) + "%" + (st.kind === "live" ? " through" : " of final year");
+}
+
+/* Routing + tick */
+const currentId = () => decodeURIComponent(location.hash.slice(1));
+let lastRoute = null;
+function route() {
+  const id = currentId();
+  $("#home").hidden = !!id; $("#detail").hidden = !id;
+  if (id) renderDetail(id); else renderHome();
+  if (lastRoute !== id) { window.scrollTo(0, 0); lastRoute = id; }
+  const e = id && byId(id);
+  document.title = e ? `${e.name} · World Countdowns` : "World Countdowns";
+}
+function tick() {
+  const now = Date.now();
+  $("#nowClock").textContent = new Date(now).toLocaleTimeString(undefined, { hour12: false });
+  if (currentId()) tickDetail(now);
+  else { const a = $("#featLink"), fe = a && byId(a.getAttribute("href").slice(1)); if (fe) fillBig($("#featBig"), state(fe, now)); }
+  let stale = false;
+  document.querySelectorAll("main:not([hidden]) .row").forEach(el => {
+    const r = shown.find(x => x.e.id === el.dataset.id); if (!r) return;
+    const st = state(r.e, now);
+    if ((st.kind === "live") !== (r.st.kind === "live") || st.kind === "done") { stale = true; return; }
+    el.querySelector("[data-days]").innerHTML = daysHTML(st);
+  });
+  if (stale) route();
+}
+
+$("#search").addEventListener("input", ev => {
+  query = ev.target.value.trim().toLowerCase(); limit = PAGE;
+  if (currentId()) location.hash = ""; else renderHome();
+});
+window.addEventListener("hashchange", route);
+$("#tzLabel").textContent = Intl.DateTimeFormat().resolvedOptions().timeZone || "Local time";
+if (!CATS[filter] || (filter === "mine" && !mine.length) || (filter === "pinned" && !pins.size)) filter = "all";
+if (!WHEN[when]) when = "any";
+route();
+setInterval(tick, 1000);
+
+// Crawled data (refreshed daily) replaces the built-in list when it is available.
+fetch("events.json", { cache: "no-cache" })
+  .then(r => r.ok ? r.json() : Promise.reject(r.status))
+  .then(data => {
+    if (!data || !Array.isArray(data.events) || data.events.length < 50) return;
+    EVENTS.length = 0;
+    data.events.forEach(e => EVENTS.push(e));
+    if (Array.isArray(data.tba)) TBA_LIST = data.tba;
+    META = data;
+    if (!CATS[filter]) filter = "all";
+    route();
+  })
+  .catch(() => {});
+</script>
+</body>
+</html>
