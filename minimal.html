@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>World Countdowns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800;900&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+:root {
+  --paper: #f5f4f1;
+  --ink: #0d0d0d;
+  --mid: #6b6b6b;
+  --soft: #a8a8a4;
+  --rule: #d9d8d3;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f0f0e; --ink: #f2f1ec; --mid: #9a9a95; --soft: #5e5e5a; --rule: #2a2a28;
+  }
+}
+:root[data-theme="dark"] { --paper: #0f0f0e; --ink: #f2f1ec; --mid: #9a9a95; --soft: #5e5e5a; --rule: #2a2a28; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--paper); color: var(--ink); }
+body { font: 400 14px/1.5 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+button, input { font: inherit; color: inherit; background: none; border: 0; }
+button { cursor: pointer; }
+::selection { background: var(--ink); color: var(--paper); }
+:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+.cap { font: 500 12px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; }
+
+/* Top bar */
+header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 28px 0; }
+header .brand { font-weight: 800; }
+header nav { display: flex; gap: 28px; }
+header nav button { padding: 4px 0; white-space: nowrap; color: var(--mid); border-bottom: 1px solid transparent; }
+header nav button:hover { color: var(--ink); }
+header nav button[aria-pressed="true"] { color: var(--ink); border-color: var(--ink); }
+header .clock { justify-self: end; font-variant-numeric: tabular-nums; }
+
+/* Hero */
+.hero { position: relative; padding: 9vh 0 10vh; border-bottom: 1px solid var(--ink); min-height: 72vh; display: flex; flex-direction: column; justify-content: flex-end; }
+.hero .shape { position: absolute; right: 0; top: 6vh; width: min(42vw, 520px); height: auto; color: var(--ink); pointer-events: none; }
+.hero .kicker { margin-bottom: 28px; color: var(--mid); display: flex; gap: 18px; }
+.hero h1, .hero .count, .hero .kicker, .hero .meta { mix-blend-mode: difference; color: #fff; }
+.hero h1 { font: 400 clamp(56px, 10vw, 156px)/0.9 var(--serif); letter-spacing: -0.02em; max-width: 11ch; position: relative; }
+.hero h1 a { color: inherit; text-decoration: none; }
+.hero .meta { margin-top: 24px; color: var(--mid); max-width: 52ch; position: relative; }
+.count { display: flex; align-items: flex-end; gap: clamp(16px, 3vw, 44px); margin-top: 7vh; position: relative; }
+.count div { display: flex; flex-direction: column; }
+.count b { font: 900 clamp(48px, 9vw, 136px)/0.82 var(--sans); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.count small { margin-top: 14px; color: var(--mid); }
+
+/* Index */
+.tools { display: flex; justify-content: space-between; align-items: end; gap: 24px; padding: 56px 0 20px; flex-wrap: wrap; }
+.tools h2 { font: 900 clamp(40px, 6vw, 84px)/0.9 var(--sans); letter-spacing: -0.04em; text-transform: uppercase; }
+.tools h2 sup { font: 500 14px var(--sans); letter-spacing: 0.1em; vertical-align: top; margin-left: 8px; color: var(--mid); }
+.tools .right { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+.range { display: flex; gap: 18px; }
+.range button { color: var(--soft); }
+.range button[aria-pressed="true"] { color: var(--ink); }
+.tools input { border-bottom: 1px solid var(--ink); padding: 6px 0; width: 200px; outline: none; }
+.tools input::placeholder { color: var(--soft); text-transform: uppercase; letter-spacing: 0.14em; font-size: 12px; }
+
+ol { list-style: none; border-top: 1px solid var(--ink); }
+li { border-bottom: 1px solid var(--rule); }
+.row { display: grid; grid-template-columns: 56px 28px 1fr 180px 150px; gap: 20px; align-items: baseline; width: 100%; text-align: left; padding: 22px 0; }
+.row:hover .name { font-style: italic; }
+.row .n { color: var(--soft); font-variant-numeric: tabular-nums; }
+.row svg { width: 14px; height: 14px; align-self: center; }
+.row .name { font: 400 clamp(22px, 2.4vw, 34px)/1.1 var(--serif); }
+.row .date { color: var(--mid); }
+.row .days { justify-self: end; font: 800 clamp(22px, 2.4vw, 34px)/1 var(--sans); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.row .days small { font: 500 11px var(--sans); letter-spacing: 0.14em; margin-left: 6px; color: var(--mid); }
+.row .days.live { font-style: normal; }
+.more { display: grid; grid-template-columns: 56px 28px 1fr 330px; gap: 20px; padding: 0 0 28px; }
+.more p { grid-column: 3; color: var(--mid); max-width: 60ch; }
+.more dl { grid-column: 4; display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; }
+.more dt { color: var(--soft); }
+.empty { padding: 60px 0; color: var(--mid); font: 400 28px var(--serif); }
+.loadmore { display: block; margin: 40px auto 0; padding: 14px 28px; border: 1px solid var(--ink); }
+.loadmore:hover { background: var(--ink); color: var(--paper); }
+
+footer { display: flex; justify-content: space-between; gap: 20px; padding: 80px 0 40px; color: var(--mid); flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .wrap { padding: 0 16px; }
+  header { grid-template-columns: 1fr auto; gap: 16px 0; }
+  header nav { grid-column: 1 / -1; grid-row: 2; overflow-x: auto; gap: 20px; scrollbar-width: none; }
+  .hero { min-height: 0; padding: 48px 0 56px; }
+  .hero .shape { width: 46vw; top: 24px; opacity: 0.9; }
+  .row { grid-template-columns: 22px 1fr auto; gap: 4px 12px; padding: 18px 0; }
+  .row .n { display: none; }
+  .row .date { grid-column: 2; grid-row: 2; font-size: 12px; }
+  .row .days { grid-column: 3; grid-row: 1 / span 2; align-self: center; }
+  .more { grid-template-columns: 22px 1fr; gap: 12px; }
+  .more p, .more dl { grid-column: 2; }
+  .tools input { width: 100%; }
+  .tools .right { width: 100%; justify-content: space-between; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="cap brand">World Countdowns</div>
+    <nav id="cats" class="cap" aria-label="Categories"></nav>
+    <div class="cap clock" id="clock">--:--:--</div>
+  </header>
+
+  <section class="hero" id="hero"></section>
+
+  <section>
+    <div class="tools">
+      <h2>Index<sup id="total">0</sup></h2>
+      <div class="right">
+        <div class="range cap" id="range"></div>
+        <input id="q" type="search" placeholder="Search" aria-label="Search events">
+      </div>
+    </div>
+    <ol id="list"></ol>
+    <button class="loadmore cap" id="loadmore" hidden>Show more</button>
+  </section>
+
+  <footer class="cap">
+    <span id="updated">Loading data</span>
+    <a href="holidays.html" style="color:inherit">Holidays by country →</a>
+    <span id="sources"></span>
+  </footer>
+</div>
+
+<script>
+const CATS = { all: "All", sports: "Sports", games: "Games", movies: "Film & TV", world: "World", holidays: "Holidays", space: "Space" };
+const DAY = 864e5;
+const RANGES = { any: ["Any time", Infinity], week: ["7 days", 7 * DAY], month: ["31 days", 31 * DAY], year: ["Year", 365 * DAY] };
+// One plain geometric mark per category, in the spirit of the reference's big black shapes.
+const SHAPES = {
+  sports: '<circle cx="50" cy="50" r="50"/>',
+  games: '<path d="M50 0L100 100H0z"/>',
+  movies: '<rect width="100" height="100"/>',
+  world: '<path d="M0 75A50 50 0 0 1 100 75z"/>',
+  holidays: '<path d="M38 0h24v38h38v24H62v38H38V62H0V38h38z"/>',
+  space: '<path d="M50 0l12 38 38 12-38 12-12 38-12-38L0 50l38-12z"/>',
+};
+const glyph = (cat, cls = "") => `<svg class="${cls}" viewBox="0 0 100 100" fill="currentColor" aria-hidden="true">${SHAPES[cat] || SHAPES.world}</svg>`;
+
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+let cat = store.get("wcm-cat", "all"), range = store.get("wcm-range", "any"), query = "", limit = 40, open = null;
+let EVENTS = [], featured = null;
+
+const $ = s => document.querySelector(s);
+const pad = (n, l = 2) => String(n).padStart(l, "0");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const fmtDate = new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short", year: "numeric" });
+const split = ms => { const s = Math.max(0, Math.floor(ms / 1000)); return { d: Math.floor(s / 86400), h: Math.floor(s % 86400 / 3600), m: Math.floor(s % 3600 / 60), s: s % 60 }; };
+const startOf = e => new Date(e.t).getTime();
+const endOf = e => e.end ? new Date(e.end).getTime() : startOf(e);
+const isLive = (e, now) => now >= startOf(e) && now <= endOf(e) && e.end;
+
+// Same rule as index.html: the next upcoming event with rank 20 or more (curated events are 1000).
+function pickFeatured(now) {
+  const ups = EVENTS.filter(e => startOf(e) > now);
+  return ups.find(e => (e.rank ?? 1000) >= 20) || ups[0];
+}
+
+function renderNav() {
+  $("#cats").innerHTML = Object.entries(CATS).map(([k, v]) => `<button data-cat="${k}" aria-pressed="${k === cat}">${v}</button>`).join("");
+  $("#range").innerHTML = Object.entries(RANGES).map(([k, [v]]) => `<button data-range="${k}" aria-pressed="${k === range}">${v}</button>`).join("");
+}
+
+function renderHero() {
+  const e = featured;
+  if (!e) { $("#hero").innerHTML = ""; return; }
+  $("#hero").innerHTML = `
+    ${glyph(e.cat, "shape")}
+    <div class="kicker cap"><span>Next</span><span>${CATS[e.cat] || ""}</span><span>${fmtDate.format(new Date(e.t))}</span></div>
+    <h1>${esc(e.name)}</h1>
+    ${e.desc ? `<p class="meta">${esc(e.desc)}</p>` : ""}
+    <div class="count" id="count">
+      <div><b data-u="d">000</b><small class="cap">Days</small></div>
+      <div><b data-u="h">00</b><small class="cap">Hours</small></div>
+      <div><b data-u="m">00</b><small class="cap">Minutes</small></div>
+      <div><b data-u="s">00</b><small class="cap">Seconds</small></div>
+    </div>`;
+  tickHero(Date.now());
+}
+
+function tickHero(now) {
+  if (!featured) return;
+  const p = split(startOf(featured) - now);
+  document.querySelectorAll("#count [data-u]").forEach(el => el.textContent = el.dataset.u === "d" ? pad(p.d, 3) : pad(p[el.dataset.u]));
+}
+
+function visible(now) {
+  return EVENTS.filter(e => {
+    if (endOf(e) < now) return false;
+    if (cat !== "all" && e.cat !== cat) return false;
+    if (!isLive(e, now) && startOf(e) - now > RANGES[range][1]) return false;
+    if (query && !(e.name + " " + (e.where || "") + " " + (e.desc || "")).toLowerCase().includes(query)) return false;
+    return true;
+  });
+}
+
+function daysCell(e, now) {
+  if (isLive(e, now)) return `Live<small>now</small>`;
+  const p = split(startOf(e) - now);
+  return p.d >= 1 ? `${p.d}<small>days</small>` : `${pad(p.h)}:${pad(p.m)}:${pad(p.s)}`;
+}
+
+function renderList() {
+  const now = Date.now(), rows = visible(now);
+  $("#total").textContent = rows.length;
+  if (!rows.length) { $("#list").innerHTML = `<li class="empty">Nothing coming up here.</li>`; $("#loadmore").hidden = true; return; }
+  $("#list").innerHTML = rows.slice(0, limit).map((e, i) => `
+    <li>
+      <button class="row" data-id="${esc(e.id)}" aria-expanded="${open === e.id}">
+        <span class="n cap">${pad(i + 1, 3)}</span>
+        ${glyph(e.cat)}
+        <span class="name">${esc(e.name)}</span>
+        <span class="date cap">${fmtDate.format(new Date(e.t))}</span>
+        <span class="days" data-days>${daysCell(e, now)}</span>
+      </button>
+      ${open === e.id ? `<div class="more">
+        <p>${esc(e.desc || "")}${e.where ? `<br>${esc(e.where)}` : ""}</p>
+        ${(e.facts || []).length ? `<dl class="cap">${e.facts.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : ""}
+      </div>` : ""}
+    </li>`).join("");
+  $("#loadmore").hidden = rows.length <= limit;
+}
+
+function tick() {
+  const now = Date.now();
+  $("#clock").textContent = new Date(now).toLocaleTimeString(undefined, { hour12: false });
+  tickHero(now);
+  document.querySelectorAll("#list .row").forEach(el => {
+    const e = EVENTS.find(x => x.id === el.dataset.id);
+    if (e) el.querySelector("[data-days]").innerHTML = daysCell(e, now);
+  });
+}
+
+document.addEventListener("click", ev => {
+  const c = ev.target.closest("[data-cat]"), r = ev.target.closest("[data-range]"), row = ev.target.closest(".row");
+  if (c) { cat = c.dataset.cat; store.set("wcm-cat", cat); limit = 40; renderNav(); renderList(); }
+  if (r) { range = r.dataset.range; store.set("wcm-range", range); limit = 40; renderNav(); renderList(); }
+  if (row) { open = open === row.dataset.id ? null : row.dataset.id; renderList(); }
+});
+$("#loadmore").addEventListener("click", () => { limit += 40; renderList(); });
+$("#q").addEventListener("input", ev => { query = ev.target.value.trim().toLowerCase(); limit = 40; renderList(); });
+
+if (!CATS[cat]) cat = "all";
+if (!RANGES[range]) range = "any";
+renderNav();
+fetch("events.json", { cache: "no-cache" })
+  .then(r => r.ok ? r.json() : Promise.reject(r.status))
+  .then(data => {
+    EVENTS = (data.events || []).slice().sort((a, b) => startOf(a) - startOf(b));
+    featured = pickFeatured(Date.now());
+    $("#updated").textContent = `${data.count} events · updated ${fmtDate.format(new Date(data.generated))}`;
+    $("#sources").textContent = (data.sources || []).join(" · ");
+    renderHero(); renderList();
+  })
+  .catch(() => { $("#updated").textContent = "Could not load events.json. Serve this folder over http."; });
+setInterval(tick, 1000);
+</script>
+</body>
+</html>

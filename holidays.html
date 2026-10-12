@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Public Holidays</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800;900&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+:root {
+  --paper: #f5f4f1;
+  --ink: #0d0d0d;
+  --mid: #6b6b6b;
+  --soft: #a8a8a4;
+  --rule: #d9d8d3;
+  --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f0f0e; --ink: #f2f1ec; --mid: #9a9a95; --soft: #5e5e5a; --rule: #2a2a28;
+  }
+}
+:root[data-theme="dark"] { --paper: #0f0f0e; --ink: #f2f1ec; --mid: #9a9a95; --soft: #5e5e5a; --rule: #2a2a28; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--paper); color: var(--ink); }
+body { font: 400 14px/1.5 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+button, input { font: inherit; color: inherit; background: none; border: 0; }
+button { cursor: pointer; }
+a { color: inherit; }
+::selection { background: var(--ink); color: var(--paper); }
+:focus-visible { outline: 1px solid var(--ink); outline-offset: 3px; }
+
+.wrap { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+.cap { font: 500 12px/1 var(--sans); letter-spacing: 0.14em; text-transform: uppercase; }
+
+header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 28px 0; }
+header .brand { font-weight: 800; text-decoration: none; }
+header nav { display: flex; gap: 28px; }
+header nav a { color: var(--mid); text-decoration: none; padding: 4px 0; border-bottom: 1px solid transparent; white-space: nowrap; }
+header nav a:hover { color: var(--ink); }
+header nav a[aria-current="page"] { color: var(--ink); border-color: var(--ink); }
+header .clock { justify-self: end; font-variant-numeric: tabular-nums; }
+
+/* Country picker */
+.picker { position: relative; padding: 7vh 0 0; }
+.picker label { display: block; color: var(--mid); margin-bottom: 14px; }
+.picker input { width: 100%; font: 400 clamp(56px, 10vw, 156px)/0.95 var(--serif); letter-spacing: -0.02em; border-bottom: 1px solid var(--ink); padding-bottom: 12px; outline: none; }
+.picker input::placeholder { color: var(--soft); }
+.suggest { position: absolute; left: 0; right: 0; top: 100%; z-index: 5; background: var(--paper); border: 1px solid var(--ink); border-top: 0; max-height: 360px; overflow-y: auto; }
+.suggest button { display: flex; justify-content: space-between; gap: 16px; width: 100%; text-align: left; padding: 14px 20px; border-bottom: 1px solid var(--rule); }
+.suggest button:hover, .suggest button.on { background: var(--ink); color: var(--paper); }
+.suggest .name { font: 400 24px/1.1 var(--serif); }
+.suggest .cap { align-self: center; opacity: 0.6; }
+
+/* Next holiday */
+.next { padding: 7vh 0 9vh; border-bottom: 1px solid var(--ink); }
+.next .kicker { color: var(--mid); display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 20px; }
+.next h1 { font: 400 clamp(40px, 6vw, 88px)/0.95 var(--serif); letter-spacing: -0.02em; }
+.next .local { margin-top: 12px; color: var(--mid); font: italic 400 22px var(--serif); }
+.count { display: flex; align-items: flex-end; gap: clamp(16px, 3vw, 44px); margin-top: 6vh; }
+.count div { display: flex; flex-direction: column; }
+.count b { font: 900 clamp(48px, 9vw, 136px)/0.82 var(--sans); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.count small { margin-top: 14px; color: var(--mid); }
+
+/* Calendar */
+.tools { display: flex; justify-content: space-between; align-items: end; gap: 24px; padding: 56px 0 20px; flex-wrap: wrap; }
+.tools h2 { font: 900 clamp(40px, 6vw, 84px)/0.9 var(--sans); letter-spacing: -0.04em; text-transform: uppercase; }
+.tools h2 sup { font: 500 14px var(--sans); letter-spacing: 0.1em; vertical-align: top; margin-left: 8px; color: var(--mid); }
+.toggles { display: flex; gap: 18px; flex-wrap: wrap; }
+.toggles button { color: var(--soft); }
+.toggles button[aria-pressed="true"] { color: var(--ink); }
+
+.month { display: grid; grid-template-columns: 200px 1fr; gap: 20px; border-top: 1px solid var(--ink); padding-top: 18px; margin-bottom: 36px; }
+.month h3 { font: 800 22px/1 var(--sans); letter-spacing: -0.02em; text-transform: uppercase; }
+.month ul { list-style: none; }
+.month li { display: grid; grid-template-columns: 90px 1fr 120px; gap: 20px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.month li:first-child { padding-top: 0; }
+.month li.past { color: var(--soft); }
+.month li.past .days { color: var(--soft); }
+.month .date { color: var(--mid); }
+.month .name { font: 400 clamp(20px, 2vw, 28px)/1.15 var(--serif); }
+.month .sub { display: block; margin-top: 6px; color: var(--mid); font: 500 11px/1.5 var(--sans); letter-spacing: 0.12em; text-transform: uppercase; }
+.month .days { justify-self: end; font: 800 22px/1 var(--sans); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.month .days small { font: 500 11px var(--sans); letter-spacing: 0.14em; margin-left: 4px; color: var(--mid); }
+.empty { padding: 60px 0; color: var(--mid); font: 400 28px var(--serif); }
+
+footer { display: flex; justify-content: space-between; gap: 20px; padding: 80px 0 40px; color: var(--mid); flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .wrap { padding: 0 16px; }
+  header { grid-template-columns: 1fr auto; gap: 16px 0; }
+  header nav { grid-column: 1 / -1; grid-row: 2; gap: 20px; }
+  .month { grid-template-columns: 1fr; gap: 12px; }
+  .month li { grid-template-columns: 64px 1fr auto; gap: 12px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="cap brand" href="minimal.html">World Countdowns</a>
+    <nav class="cap" aria-label="Pages">
+      <a href="minimal.html">Countdowns</a>
+      <a href="holidays.html" aria-current="page">Holidays by country</a>
+    </nav>
+    <div class="cap clock" id="clock">--:--:--</div>
+  </header>
+
+  <div class="picker">
+    <label class="cap" for="country">Country</label>
+    <input id="country" autocomplete="off" placeholder="Type a country" role="combobox" aria-expanded="false" aria-controls="suggest">
+    <div class="suggest" id="suggest" role="listbox" hidden></div>
+  </div>
+
+  <section class="next" id="next"></section>
+
+  <section>
+    <div class="tools">
+      <h2>Calendar<sup id="total">0</sup></h2>
+      <div class="toggles cap" id="toggles"></div>
+    </div>
+    <div id="cal"></div>
+  </section>
+
+  <footer class="cap">
+    <span id="updated">Loading data</span>
+    <span>Data: <a href="https://date.nager.at">Nager.Date</a></span>
+  </footer>
+</div>
+
+<script>
+const DAY = 864e5;
+const store = {
+  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+const $ = s => document.querySelector(s);
+const pad = (n, l = 2) => String(n).padStart(l, "0");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const fmtDay = new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short" });
+const fmtLong = new Intl.DateTimeFormat(undefined, { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+const fmtMonth = new Intl.DateTimeFormat(undefined, { month: "long", year: "numeric" });
+const fmtWeekday = new Intl.DateTimeFormat(undefined, { weekday: "short" });
+const split = ms => { const s = Math.max(0, Math.floor(ms / 1000)); return { d: Math.floor(s / 86400), h: Math.floor(s % 86400 / 3600), m: Math.floor(s % 3600 / 60), s: s % 60 }; };
+// Holidays are whole local days, so they count down to local midnight wherever the viewer is.
+const at = date => new Date(date + "T00:00:00").getTime();
+const today = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+
+let COUNTRIES = [], current = null, regional = store.get("wch-regional", false), showPast = store.get("wch-past", false), next = null, hi = 0;
+
+function guessCountry() {
+  const fromHash = decodeURIComponent(location.hash.slice(1)).toUpperCase();
+  if (fromHash) return fromHash;
+  const saved = store.get("wch-country", null);
+  if (saved) return saved;
+  for (const lang of navigator.languages || [navigator.language]) {
+    const m = /-([A-Z]{2})\b/i.exec(lang || "");
+    if (m) return m[1].toUpperCase();
+  }
+  return "US";
+}
+
+function matches(q) {
+  q = q.trim().toLowerCase();
+  if (!q) return COUNTRIES;
+  return COUNTRIES.filter(c => c.name.toLowerCase().includes(q) || c.code.toLowerCase() === q)
+    .sort((a, b) => a.name.toLowerCase().indexOf(q) - b.name.toLowerCase().indexOf(q));
+}
+
+function showSuggest(open) {
+  const list = matches($("#country").value).slice(0, 40);
+  hi = Math.min(hi, Math.max(0, list.length - 1));
+  $("#suggest").innerHTML = list.map((c, i) => `<button role="option" data-code="${c.code}" class="${i === hi ? "on" : ""}"><span class="name">${esc(c.name)}</span><span class="cap">${c.code} · ${c.count}</span></button>`).join("");
+  $("#suggest").hidden = !open || !list.length;
+  $("#country").setAttribute("aria-expanded", String(!$("#suggest").hidden));
+}
+
+async function choose(code) {
+  const c = COUNTRIES.find(x => x.code === code) || COUNTRIES.find(x => x.code === "US") || COUNTRIES[0];
+  if (!c) return;
+  $("#country").value = c.name;
+  $("#suggest").hidden = true;
+  store.set("wch-country", c.code);
+  if (location.hash.slice(1) !== c.code) history.replaceState(null, "", "#" + c.code);
+  document.title = `${c.name} Public Holidays`;
+  try {
+    const r = await fetch(`holidays/${c.code}.json`, { cache: "no-cache" });
+    if (!r.ok) throw r.status;
+    current = await r.json();
+    render();
+  } catch {
+    $("#next").innerHTML = ""; $("#cal").innerHTML = `<p class="empty">Could not load the calendar for ${esc(c.name)}.</p>`;
+  }
+}
+
+function renderToggles() {
+  $("#toggles").innerHTML = `
+    <button data-t="regional" aria-pressed="${regional}">Include regional</button>
+    <button data-t="past" aria-pressed="${showPast}">Show past</button>`;
+}
+
+function render() {
+  renderToggles();
+  const t = today();
+  const days = current.holidays.filter(h => (regional || !h.regions) && (showPast || h.date >= t));
+  next = current.holidays.find(h => h.date >= t && !h.regions) || current.holidays.find(h => h.date >= t);
+  $("#total").textContent = days.length;
+
+  $("#next").innerHTML = next ? `
+    <div class="kicker cap"><span>Next holiday in ${esc(current.name)}</span><span>${fmtLong.format(new Date(at(next.date)))}</span>${next.regions ? `<span>Regional</span>` : ""}</div>
+    <h1>${esc(next.name)}</h1>
+    ${next.local ? `<p class="local">${esc(next.local)}</p>` : ""}
+    <div class="count" id="count">
+      <div><b data-u="d">000</b><small class="cap">Days</small></div>
+      <div><b data-u="h">00</b><small class="cap">Hours</small></div>
+      <div><b data-u="m">00</b><small class="cap">Minutes</small></div>
+      <div><b data-u="s">00</b><small class="cap">Seconds</small></div>
+    </div>` : `<p class="empty">No upcoming holidays in the data for ${esc(current.name)}.</p>`;
+  tick();
+
+  if (!days.length) { $("#cal").innerHTML = `<p class="empty">Nothing to show. Try including regional holidays.</p>`; return; }
+  const months = new Map();
+  days.forEach(h => { const k = h.date.slice(0, 7); if (!months.has(k)) months.set(k, []); months.get(k).push(h); });
+  const now = Date.now();
+  $("#cal").innerHTML = [...months].map(([k, list]) => `
+    <div class="month">
+      <h3>${fmtMonth.format(new Date(k + "-01T00:00:00"))}</h3>
+      <ul>${list.map(h => {
+        const ms = at(h.date) - now, past = h.date < t, d = Math.ceil(ms / DAY);
+        const sub = [h.local, (h.types || []).join(", "), h.regions ? `Only in ${h.regions.slice(0, 6).join(", ")}${h.regions.length > 6 ? ` +${h.regions.length - 6}` : ""}` : ""].filter(Boolean).join(" · ");
+        return `<li class="${past ? "past" : ""}">
+          <span class="date cap">${fmtWeekday.format(new Date(at(h.date)))} ${fmtDay.format(new Date(at(h.date)))}</span>
+          <span class="name">${esc(h.name)}${sub ? `<span class="sub">${esc(sub)}</span>` : ""}</span>
+          <span class="days">${past ? "Past" : h.date === t ? "Today" : `${d}<small>${d === 1 ? "day" : "days"}</small>`}</span>
+        </li>`;
+      }).join("")}</ul>
+    </div>`).join("");
+}
+
+function tick() {
+  $("#clock").textContent = new Date().toLocaleTimeString(undefined, { hour12: false });
+  if (!next) return;
+  const p = split(at(next.date) - Date.now());
+  document.querySelectorAll("#count [data-u]").forEach(el => el.textContent = el.dataset.u === "d" ? pad(p.d, 3) : pad(p[el.dataset.u]));
+}
+
+const input = $("#country");
+input.addEventListener("focus", () => { input.select(); hi = 0; showSuggest(true); });
+input.addEventListener("input", () => { hi = 0; showSuggest(true); });
+input.addEventListener("keydown", ev => {
+  const opts = [...$("#suggest").querySelectorAll("button")];
+  if (ev.key === "ArrowDown" || ev.key === "ArrowUp") { ev.preventDefault(); hi = (hi + (ev.key === "ArrowDown" ? 1 : -1) + opts.length) % opts.length; showSuggest(true); opts[hi]?.scrollIntoView({ block: "nearest" }); }
+  if (ev.key === "Enter" && opts[hi]) { ev.preventDefault(); choose(opts[hi].dataset.code); input.blur(); }
+  if (ev.key === "Escape") { $("#suggest").hidden = true; input.value = current ? current.name : ""; input.blur(); }
+});
+input.addEventListener("blur", () => setTimeout(() => { $("#suggest").hidden = true; if (current) input.value = current.name; }, 150));
+document.addEventListener("click", ev => {
+  const opt = ev.target.closest("#suggest [data-code]"), tg = ev.target.closest("[data-t]");
+  if (opt) choose(opt.dataset.code);
+  if (tg && current) {
+    if (tg.dataset.t === "regional") { regional = !regional; store.set("wch-regional", regional); }
+    if (tg.dataset.t === "past") { showPast = !showPast; store.set("wch-past", showPast); }
+    render();
+  }
+});
+window.addEventListener("hashchange", () => { const c = location.hash.slice(1).toUpperCase(); if (c && (!current || c !== current.code)) choose(c); });
+
+fetch("holidays/index.json", { cache: "no-cache" })
+  .then(r => r.ok ? r.json() : Promise.reject(r.status))
+  .then(data => {
+    COUNTRIES = data.countries;
+    $("#updated").textContent = `${COUNTRIES.length} countries · updated ${new Date(data.generated).toLocaleDateString()}`;
+    choose(guessCountry());
+  })
+  .catch(() => { $("#updated").textContent = "Could not load holidays/index.json. Serve this folder over http."; });
+setInterval(tick, 1000);
+</script>
+</body>
+</html>

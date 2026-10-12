@@ -5,7 +5,7 @@ Builds ../events.json from free, key-less public sources:
   - curated.json            hand-checked headline events (always kept, win on duplicates)
   - Wikidata SPARQL         films, TV, video games, sports events, elections, space launches
   - Jolpica (Ergast) F1     Formula 1 race calendar with exact start times
-  - Nager.Date              public holidays for major countries
+  - Nager.Date              public holidays (merged highlights, plus full per-country calendars in ../holidays/)
   - built-in astronomy      eclipses, meteor-shower peaks, solstices and equinoxes
 
 Run:  python3 crawler/crawl.py            (from the Worldcountdowns folder)
@@ -294,15 +294,59 @@ HOLIDAY_ICON = [("christmas", "gift"), ("new year", "spark"), ("independence", "
                 ("eid", "moon"), ("easter", "spark"), ("labour", "flag"), ("labor", "flag")]
 
 
-def from_holidays():
+HOLIDAYS_DIR = ROOT / "holidays"
+
+
+def holiday_calendars():
+    """Full public-holiday calendars (this year and next) for every country Nager.Date covers."""
+    countries = get_json("https://date.nager.at/api/v3/AvailableCountries", tries=3, timeout=30)
+    cal = {}
+    for c in countries:
+        cc, rows = c["countryCode"], []
+        for year in (NOW.year, NOW.year + 1):
+            try:
+                rows += get_json(f"https://date.nager.at/api/v3/PublicHolidays/{year}/{cc}", tries=2, timeout=30)
+            except (RuntimeError, ValueError):
+                pass  # no data for this country and year
+            time.sleep(0.15)
+        if rows:
+            cal[cc] = {"name": c["name"], "holidays": rows}
+    log(f"Holiday calendars: {len(cal)} of {len(countries)} countries")
+    return cal
+
+
+def write_holiday_calendars(cal):
+    """holidays/index.json lists the countries; holidays/XX.json holds one country's calendar."""
+    HOLIDAYS_DIR.mkdir(exist_ok=True)
+    index = []
+    for cc, c in sorted(cal.items(), key=lambda kv: kv[1]["name"]):
+        days = []
+        for h in sorted(c["holidays"], key=lambda h: h["date"]):
+            d = {"date": h["date"], "name": h["name"]}
+            if h.get("localName") and h["localName"] != h["name"]:
+                d["local"] = h["localName"]
+            if h.get("types") and h["types"] != ["Public"]:
+                d["types"] = h["types"]
+            if h.get("counties"):
+                d["regions"] = h["counties"]
+            days.append(d)
+        upcoming = [d for d in days if d["date"] >= NOW.strftime("%Y-%m-%d") and not d.get("regions")]
+        index.append({"code": cc, "name": c["name"], "count": len(days),
+                      "next": upcoming[0] if upcoming else None})
+        (HOLIDAYS_DIR / f"{cc}.json").write_text(json.dumps(
+            {"code": cc, "name": c["name"], "generated": NOW.strftime("%Y-%m-%dT%H:%M:%SZ"), "holidays": days},
+            ensure_ascii=False, separators=(",", ":")))
+    (HOLIDAYS_DIR / "index.json").write_text(json.dumps(
+        {"generated": NOW.strftime("%Y-%m-%dT%H:%M:%SZ"), "source": "Nager.Date", "countries": index},
+        ensure_ascii=False, separators=(",", ":")))
+
+
+def from_holidays(cal):
     merged = {}
     names = {}
     for cc in HOLIDAY_COUNTRIES:
-        for year in (NOW.year, NOW.year + 1):
-            try:
-                rows = get_json(f"https://date.nager.at/api/v3/PublicHolidays/{year}/{cc}", tries=2, timeout=30)
-            except RuntimeError:
-                continue
+        if cc in cal:
+            rows = cal[cc]["holidays"]
             for h in rows:
                 d = datetime.fromisoformat(h["date"]).replace(tzinfo=timezone.utc)
                 if d < NOW - timedelta(days=1) or not h.get("global", True):
@@ -313,7 +357,6 @@ def from_holidays():
                 merged[key]["countries"].append(cc)
                 if h.get("localName") and h["localName"] != name:
                     merged[key]["local"].add(h["localName"])
-            time.sleep(0.2)
     events = []
     for (date, _), h in merged.items():
         n = len(h["countries"])
@@ -414,7 +457,11 @@ def main():
     sources.append(wd)
     tba += sorted(wd_tba, key=lambda x: -x.get("sl", 0))[:60]
     sources.append(cached("f1", from_f1, 1))
-    sources.append(cached("holidays", from_holidays, 50))
+    cal = cached("holiday-calendars", holiday_calendars, 50)
+    cal = cal if isinstance(cal, dict) else {}
+    if cal:
+        write_holiday_calendars(cal)
+    sources.append(cached("holidays", lambda: from_holidays(cal), 50))
     sources.append(from_astronomy())
 
     def start(e):

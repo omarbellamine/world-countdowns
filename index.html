@@ -50,7 +50,7 @@ svg.ic { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-wid
 @media (prefers-reduced-motion: reduce) { .preload i { animation: none; } }
 
 header.top { display: flex; justify-content: space-between; align-items: end; gap: 12px; padding: 22px 28px 14px; flex-wrap: wrap; }
-.logo { display: inline-flex; align-items: baseline; gap: 8px; }
+.logo { display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 2px 8px; min-width: 0; }
 .logo b { font: 700 18px/1 var(--pixel); letter-spacing: 0.02em; }
 .logo b span { color: var(--orange); }
 .logo small { color: var(--soft); font: 400 9px var(--pixel); text-transform: uppercase; }
@@ -136,6 +136,13 @@ main[hidden] { display: none; }
 .src { font: 400 8px var(--pixel); color: var(--soft); text-transform: uppercase; }
 .empty { color: var(--mid); padding: 14px 0; margin: 0; font-size: 11px; }
 @media (max-width: 640px) {
+  header.top { padding: 18px 16px 12px; }
+  nav.menu, main { padding-inline: 16px; }
+  .logo b { font-size: 15px; }
+  .clock { text-align: left; }
+  .menu ul { gap: 6px 14px; }
+  .menu li + li::before { display: none; }
+  .search { flex: 1; } .search input { width: 100%; }
   .row { grid-template-columns: 8px minmax(0, 1fr) 64px 20px; row-gap: 6px; }
   .row > .ic { display: none; }
   .row .blocks { grid-column: 2 / -1; grid-row: 2; }
@@ -501,10 +508,11 @@ function renderHome() {
     .sort((a, b) => (b.st.kind === "live") - (a.st.kind === "live") || a.st.start - b.st.start);
   shown = rows;
   const ups = live.filter(r => r.st.kind !== "live").sort((a, b) => a.st.start - b.st.start);
-  const feat = ups.find(r => pins.has(r.e.id)) || ups[0];
+  const major = r => (r.e.rank ?? 1000) >= 20 || r.e.mine;
+  const feat = ups.find(r => pins.has(r.e.id)) || ups.find(major) || ups[0];
 
   const next = feat ? `<section class="next" style="--c:${colorOf(feat.e)}">
-      <div><div class="k">${pins.has(feat.e.id) ? "Next pinned" : "Next up"} / ${esc(catName(feat.e))}</div>
+      <div><div class="k">${pins.has(feat.e.id) ? "Next pinned" : "Next big event"} / ${esc(catName(feat.e))}</div>
         <h2><a href="#${esc(feat.e.id)}" id="featLink">${esc(feat.e.name)}</a></h2><p>${esc(feat.e.desc || "")} · ${whenText(feat.e)}</p></div>
       <div class="big" id="featBig">${bigHTML()}</div>
       <span class="blocks">${blocks(feat.st.p, 60)}</span>
